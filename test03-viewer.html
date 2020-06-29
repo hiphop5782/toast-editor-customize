@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+</head>
+<body>
+    <h5>Viewer 1</h5>
+    <div class="toast-custom-viewer">
+# 제목 
+테스트 내용
+## 소제목1 
+테스트 내용
+## 소제목2
+테스트 내용
+    </div>
+    <h5>Viewer 2</h5>
+    <div class="toast-custom-viewer">[구글](https://www.google.com)</div>
+    <h5>Viewer 3</h5>
+    <div class="toast-custom-viewer"></div>
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <script src="./test03-viewer.js"></script>
+    <script>
+        Hacademy.TuiEditor.createViewer(".toast-custom-viewer");
+    </script>
+</body>
+</html>
