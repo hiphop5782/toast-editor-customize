@@ -17,10 +17,17 @@
 
         util.editors = util.editors || [];
         for(var i=0; i < elements.length; i++){
+            //ID 계산(없으면 i로 설정)
+            var idx = elements[i].id || i;
+            
+            //내용을 불러와서 설정
+            var content = elements[i].textContent || "";
+            elements[i].textContent = "";
 
             //create editor and push
-            util.editors[i] = new toastui.Editor({
-                el:elements[i]
+            util.editors[idx] = new toastui.Editor({
+                el:elements[i],
+                initialValue: content
             });
         }
     };
