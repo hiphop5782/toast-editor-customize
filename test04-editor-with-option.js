@@ -107,7 +107,6 @@
                 cloneOptions.initialEditType = "wysiwyg";
 
             //create editor and push
-            console.log(cloneOptions);
             util.editors[idx] = new toastui.Editor(cloneOptions);
         }
     };
