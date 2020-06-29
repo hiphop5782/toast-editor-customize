@@ -25,7 +25,7 @@
             elements[i].textContent = "";
 
             //create editor and push
-            util.editors[idx] = new toastui.Editor({
+            util.editors[idx] = toastui.Editor.factory({
                 el:elements[i],
                 initialValue: content
             });

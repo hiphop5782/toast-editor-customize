@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+</head>
+<body>
+    <!--
+        class 명을 이용하여 옵션이 적용되도록 구현
+        1. wysiwyg-editor : wysiwyg 모드로 실행되도록 설정(안붙일 경우 markdown으로 설정)
+        2. vertical-editor : 세로 모드로 실행되도록 설정(안붙일 경우 tab 으로 설정)
+    -->
+    <h5>Editor 1</h5>
+    <div class="toast-custom-editor">hello</div>
+    <h5>Editor 2 : wysiwyg-editor</h5>
+    <div class="toast-custom-editor wysiwyg-editor"></div>
+    <h5>Editor 3 : vertical-editor</h5>
+    <div class="toast-custom-editor vertical-editor"></div>
+    <h5>Editor 4 : readonly-editor</h5>
+    <div class="toast-custom-editor readonly-editor"></div>
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <script src="./test04-editor-with-option.js"></script>
+    <script>
+        Hacademy.TuiEditor.createEditor(".toast-custom-editor");
+    </script>
+</body>
+</html>
