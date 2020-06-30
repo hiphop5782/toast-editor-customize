@@ -1,0 +1,70 @@
+.tree > * {
+    box-sizing: border-box; 
+}
+.tree, .tree ul{
+    list-style: none !important;
+    font-size: 0.75rem;
+}
+.tree {
+    border: 1px solid gray;
+    padding:0.5rem;
+    box-shadow: 0 0 1px 1px gray;
+}
+.tree ul{
+    padding: 0;
+}
+.tree .root > div::after,
+.tree .root > div::before{
+    border:none !important;
+}
+.tree ul{
+    padding-left: 2rem;
+}
+.tree li, 
+.tree li > div{
+    position: relative;
+}
+
+.tree li > div{
+    padding:0.15rem;
+    padding-left: 1rem;
+    white-space: nowrap;
+    background-position: 0rem 0.25rem;
+    background-size: 0.75rem 0.75rem;
+    background-repeat: no-repeat;
+}
+.tree li > div::before,
+.tree li > div::after{
+    content:"";
+    position:absolute;
+    display: block;
+    left:0.25rem;
+    width:0.5rem;
+    z-index:-1;
+}
+.tree li > div::before{
+    /* background-color: green; */
+    top:0;
+    bottom:50%;
+    border-left:1px solid #CCC;
+}
+.tree li > div::after{
+    /* background-color:yellow; */
+    top:50%;
+    bottom:0;
+    border-left:1px solid #CCC;
+    border-top: 1px solid #CCC;
+}
+.tree li:not(:last-child)::before{
+    content:"";
+    position:absolute;
+    display: block;
+    left:0.25rem;
+    width:0.5rem;
+    top:0;
+    bottom:0;
+    border-left:1px solid #CCC;
+}
+.tree li:last-child > div::after{
+    border-left: none;
+}

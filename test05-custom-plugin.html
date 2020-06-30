@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+</head>
+<body>
+    <!--
+        class 명을 이용하여 옵션이 적용되도록 구현
+        1. wysiwyg-editor : wysiwyg 모드로 실행되도록 설정(안붙일 경우 markdown으로 설정)
+        2. vertical-editor : 세로 모드로 실행되도록 설정(안붙일 경우 tab 으로 설정)
+    -->
+    <h5>Editor with custom plugin</h5>
+    <div class="toast-custom-editor vertical-editor"></div>
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <!-- Editor plugins dependencies-->
+    <script src="https://uicdn.toast.com/editor-plugin-table-merged-cell/latest/toastui-editor-plugin-table-merged-cell.min.js"></script>
+    <script src="https://uicdn.toast.com/editor-plugin-chart/latest/toastui-editor-plugin-chart.js"></script>
+    <script src="https://uicdn.toast.com/editor-plugin-uml/latest/toastui-editor-plugin-uml.js"></script>
+    <script src="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.js"></script>
+    <script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.js"></script>
+    <script src="./test05-custom-plugin.js"></script>
+    <script>
+        Hacademy.TuiEditor.createEditor(".toast-custom-editor");
+    </script>
+</body>
+</html>
