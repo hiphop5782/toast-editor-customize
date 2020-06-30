@@ -1,5 +1,10 @@
 @charset "UTF-8";
 
 .tui-editor-contents .te-preview-highlight::after {
-        background-color: rgba(244, 238, 256, 0.5);
+    background-color: transparent;
+}
+
+.tui-editor-contents pre {
+    background-color:transparent;
+    box-shadow: 0px 0px 1px 1px gray;
 }

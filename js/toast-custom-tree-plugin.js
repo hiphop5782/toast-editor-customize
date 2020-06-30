@@ -14,7 +14,6 @@ function treePathPlugin(){
    function renderTreePath(wrapperId, text){
         const el = document.querySelector('#' + wrapperId);
         el.appendChild(createTreePath(text));
-        console.log("render tree path");
    }
 
    function createTreePath(text, hasRootNode){
@@ -53,7 +52,6 @@ function treePathPlugin(){
             else if(token.startsWith("    ")){
                 trimIndex = 4;
             }
-            console.log("trimIndex", trimIndex);
             if(trimIndex > 0){
                 var trimToken = token.substr(trimIndex);
                 var li = tag.childNodes[tag.childElementCount-1];

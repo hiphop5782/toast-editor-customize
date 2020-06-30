@@ -37,6 +37,7 @@
         ,tableMergedCell//table cell plugin
         ,colorSyntax//color syntax plugin
         ,treePathPlugin//custom tree path plugin
+        ,katexPlugin//custom katex plugin
     ];
 
     //editor 생성 함수
