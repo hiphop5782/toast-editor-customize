@@ -1,5 +1,4 @@
 (function (w) {
-
     if (!w) throw "Window is not defined";
     if (!toastui || !toastui.Editor) throw "Toast Dependency Not Defined";
 
@@ -30,6 +29,15 @@
         minHeight: 100,
         maxHeight: 300
     };
+
+    const pluginList = [
+        [chart, chartOptions]//chart plugin
+        ,uml//uml plugin
+        ,codeSyntaxHighlight//code highlight plugin
+        ,tableMergedCell//table cell plugin
+        ,colorSyntax//color syntax plugin
+        ,treePathPlugin//custom tree path plugin
+    ];
 
     //editor 생성 함수
     // - editor를 생성할 때 내부에 있는 글자를 value로 설정하도록 구현
@@ -68,13 +76,7 @@
         ],
 
         //플러그인 설정
-        plugins: [
-            [chart, chartOptions]//chart plugin
-            ,uml//uml plugin
-            ,codeSyntaxHighlight//code highlight plugin
-            ,tableMergedCell//table cell plugin
-            ,colorSyntax//color syntax plugin
-        ],
+        plugins: pluginList
     };
 
     var defaultViewerOptions = {
@@ -88,13 +90,7 @@
         viewer:true,
 
         //플러그인 설정
-        plugins: [
-            [chart, chartOptions]//chart plugin
-            ,uml//uml plugin
-            ,codeSyntaxHighlight//code highlight plugin
-            ,tableMergedCell//table cell plugin
-            ,colorSyntax//color syntax plugin
-        ],
+        plugins: pluginList
     };
 
     util.createEditor = function (selector) {
