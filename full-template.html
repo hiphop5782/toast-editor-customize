@@ -28,9 +28,20 @@
         1. wysiwyg-editor : wysiwyg 모드로 실행되도록 설정(안붙일 경우 markdown으로 설정)
         2. vertical-editor : 세로 모드로 실행되도록 설정(안붙일 경우 tab 으로 설정)
     -->
-    <h5>Full Template</h5>
-    <div class="toast-custom-editor vertical-editor"></div>
+    <h5>
+        Full Template
+        <button class="change-mode">change mode</button>
+    </h5>
+    <div class="toast-custom-editor vertical-editor" data-name="test"></div>
+    <div class="toast-custom-viewer" data-name="test"># hello</div>
+    
+    
+    <!-- axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+    <!-- Editor dependencies -->
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    
     <!-- Editor plugins dependencies-->
     <script src="https://uicdn.toast.com/editor-plugin-table-merged-cell/latest/toastui-editor-plugin-table-merged-cell.min.js"></script>
     <script src="https://uicdn.toast.com/editor-plugin-chart/latest/toastui-editor-plugin-chart.js"></script>
@@ -48,10 +59,24 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
     <script src="./js/toast-custom-katex-plugin.js"></script>
     
+    <!-- youtube plugin -->
+    <script src="./js/toast-custom-youtube-plugin.js"></script>
+    
+    <!-- zip-viewer plugin -->
+    <script src="./js/toast-custom-zipviewer-plugin.js"></script>
+    
+    <!-- html-render plugin -->
+    <script src="./js/toast-custom-htmlrenderer-plugin.js"></script>
+    
     <!-- curtom editor js -->
     <script src="./js/toast-custom-editor.js"></script>
     <script>
         Hacademy.TuiEditor.createEditor(".toast-custom-editor");
+        Hacademy.TuiEditor.createViewer(".toast-custom-viewer");
+        
+        document.querySelector(".change-mode").addEventListener("click", function(){
+            Hacademy.TuiEditor.changeEditorMode();
+        });
     </script>
 </body>
 </html>

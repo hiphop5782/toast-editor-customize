@@ -4,7 +4,16 @@
     background-color: transparent;
 }
 
-.tui-editor-contents pre {
+.tui-editor-contents pre ,
+.tui-editor-contents img{
     background-color:transparent;
     box-shadow: 0px 0px 1px 1px gray;
+}
+
+/* anchor copy url style */
+.anchor-copy-element{
+    margin-left: 0.5rem;
+}
+.anchor-copy-element .anchor-copy-url{
+    text-decoration: none;
 }
