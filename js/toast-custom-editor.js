@@ -6,7 +6,6 @@
     w.Hacademy.TuiEditor = w.Hacademy.TuiEditor || {};
 
     var util = w.Hacademy.TuiEditor;
-    util.sequence = 0;
 
     util.clone = function clone(obj) {
         if (obj === null || typeof (obj) !== 'object')
@@ -203,7 +202,7 @@
         var elements = document.querySelectorAll(selector);
         if (!elements.length) return;
 
-        util.viewers = util.editors || [];
+        util.viewers = util.viewers || [];
         for (var i = 0; i < elements.length; i++) {
             //ID 계산(없으면 i로 설정)
             var idx = elements[i].id || i;
@@ -226,13 +225,15 @@
             //create copy link in anchor
             var anchors = viewer.preview.el.querySelectorAll(".header-anchor");
             for(var i=0; i < anchors.length; i++){
-                console.log(anchors[i]);
-                anchors[i].appendChild(util.createColyElement());                
+                anchors[i].setAttribute("id", "header-anchor-"+i);
+                anchors[i].appendChild(util.createCopyElement());                
             }
         }
     };
     
     util.changeEditorMode = function(){
+        if(!util.editors.length) return;
+        
         for(var i=0; i < util.editors.length; i++){
             var currentMode = util.editors[i].getCurrentPreviewStyle();
             var style = currentMode === 'tab' ? 'vertical' : 'tab';
@@ -240,7 +241,7 @@
         }
     };
     
-    util.createColyElement = function(){
+    util.createCopyElement = function(){
         var small = document.createElement("small");
         small.classList.add("anchor-copy-element");
         
@@ -249,9 +250,38 @@
         link.setAttribute("href", "#");
         link.setAttribute("title", "주소 복사");
         link.textContent = "★";
+        link.addEventListener("click", util.copyToClipboard);
         
         small.appendChild(link);
         return small;
     };
 
+    //clipboard 복사
+    util.copyToClipboard = function(){
+        var el = document.createElement("textarea");
+        var id = this.parentElement.parentElement.getAttribute("id");
+        el.value = location.origin + location.pathname +"#" + id;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand("copy");
+        document.body.removeChild(el);
+        
+        //notification - required notification library
+        if(window.createNotification){
+            window.createNotification({
+                closeOnClick: true,
+                displayCloseButton: false,
+                positionClass: 'nfc-bottom-right',
+                showDuration: 3000,
+                theme: 'info'
+            })({
+                title: '복사 완료',
+                message: '주소가 클립보드에 복사되었습니다.'
+            });
+        }
+        else{
+            window.alert("링크 주소가 클립보드에 복사되었습니다");
+        }
+    };
+    
 })(window);

@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+.te-editor-section .tui-editor-contents{
+    font-family: sans-serif;
+}
+
 .tui-editor-contents .te-preview-highlight::after {
     background-color: transparent;
 }
