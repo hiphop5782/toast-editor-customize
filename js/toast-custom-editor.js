@@ -7,7 +7,7 @@
 
     var util = w.Hacademy.TuiEditor;
 
-    util.clone = function clone(obj) {
+    util.clone = function(obj) {
         if (obj === null || typeof (obj) !== 'object')
             return obj;
 
@@ -15,7 +15,7 @@
 
         for (var attr in obj) {
             if (obj.hasOwnProperty(attr)) {
-                copy[attr] = clone(obj[attr]);
+                copy[attr] = util.clone(obj[attr]);
             }
         }
 
@@ -94,6 +94,9 @@
         //플러그인 설정
         plugins: pluginList,
         
+        //실시간 미리보기 설정
+        contenteditable:false,
+        
         //훅 설정
         hooks:{
             //파일 업로드 설정(axios 필요)
@@ -134,7 +137,7 @@
         customHTMLRenderer:customHTMLRenderer    
     };
 
-    util.createEditor = function (selector) {
+    util.createEditor = function (selector, callback) {
         var elements = document.querySelectorAll(selector);
         if (!elements.length) return;
 
@@ -143,62 +146,112 @@
             //ID 계산(없으면 i로 설정)
             var idx = elements[i].id || i;
 
-            //Option 복제 및 설정
-            var cloneOptions = util.clone(defaultEditorOptions);
-
-            //대상 설정
-            cloneOptions.el = elements[i];
-
-            //내용을 불러와서 설정
-            var content = elements[i].textContent || "";
-            elements[i].textContent = "";
-            cloneOptions.initialValue = content;
-
-            //classList 점검 및 설정
-            var classList = elements[i].classList;
-
-            // .vertical-editor : 미리보기가 같이 나오도록 변경
-            // .wysiwyg-editor : wysiwyg 모드로 실행되도록 변경
-            if (classList.contains("vertical-editor"))
-                cloneOptions.previewStyle = "vertical";
-            if (classList.contains("wysiwyg-editor"))
-                cloneOptions.initialEditType = "wysiwyg";     
+            var editor = util.createUnitEditor(elements[i]);
             
-            //height setting
-            cloneOptions.height = elements[i].dataset.height || cloneOptions.height;
-
-            //create editor and push
-            var editor = toastui.Editor.factory(cloneOptions);
             util.editors[idx] = editor;
-            
-            //전송시 이름 설정
-            var input = document.createElement("input");
-            input.setAttribute("type", "hidden");
-            var name = elements[i].dataset.name || 'content';
-            input.setAttribute("name", name);
-            elements[i].appendChild(input);
-            
-            editor.on("change", e=>{
-                input.value = editor.getMarkdown();
-            });
-            
-            //blur 이벤트 발생 시 localStorage에 저장
-            editor.on("blur", e=>{
-                localStorage.setItem(idx, editor.getMarkdown());
-            });
-            
-            //localStorage에 idx에 대한 이력이 존재하고, 입력값이 없을 때 confirm 띄우기
-            var record = localStorage.getItem(idx);
-            if(record && !editor.getMarkdown()){
-                if(confirm("이전 내역을 이어서 작성하시겠습니까?")){
-                    editor.setMarkdown(record);
-                }
-                localStorage.removeItem(idx);
-            }
+            if(callback && typeof callback === "function")
+            	callback(editor);
         }
+        clearLocalStorage(w, location.origin);
+    };
+    
+    util.createUnitEditor = function(element){
+    	//Option 복제 및 설정
+        var cloneOptions = util.clone(defaultEditorOptions);
+
+        //대상 설정
+        cloneOptions.el = element;
+
+        //내용을 불러와서 설정
+        var content = element.dataset.content || "";
+        if(content){
+        	element.innerHTML = "";
+        	delete element.dataset.content;
+        	cloneOptions.initialValue = content;
+        }
+
+        //classList 점검 및 설정
+        var classList = element.classList;
+
+        // .vertical-editor : 미리보기가 같이 나오도록 변경
+        // .wysiwyg-editor : wysiwyg 모드로 실행되도록 변경
+        if (classList.contains("vertical-editor"))
+            cloneOptions.previewStyle = "vertical";
+        if (classList.contains("wysiwyg-editor"))
+            cloneOptions.initialEditType = "wysiwyg";     
+        
+        //height setting
+        cloneOptions.height = element.dataset.height || cloneOptions.height;
+
+        //create editor and push
+        var editor = toastui.Editor.factory(cloneOptions);
+        
+        //전송시 이름 설정
+        var input = document.createElement("input");
+        input.setAttribute("type", "hidden");
+        var name = element.dataset.name || 'content';
+        input.setAttribute("name", name);
+        element.appendChild(input);
+        
+        editor.on("change", e=>{
+            input.value = editor.getMarkdown();
+        });
+        
+        //blur 이벤트 발생 시 localStorage에 저장
+        // - 모든 에디터에 하지 말고 .record-editor에만 설정
+        if(classList.contains("record-editor")){
+            editor.on("blur", e=>{
+                localStorage.setItem(location.href, editor.getMarkdown());
+            });
+        }
+        
+        //localStorage에 idx에 대한 이력이 존재하고, 입력값이 없을 때 confirm 띄우기
+        var record = localStorage.getItem(location.href);
+        if(classList.contains("record-editor") && record && !editor.getMarkdown()){
+            if(confirm("이전 내역을 이어서 작성하시겠습니까?")){
+                editor.setMarkdown(record);
+            }
+            localStorage.removeItem(location.href);
+        }
+        
+        return editor;
+    }
+    
+    //clear local storage
+    function clearLocalStorage(window, origin){
+    	for(var i=0; i < window.localStorage.length; i++){
+    		var key = window.localStorage.key(i);
+    		if(key.startsWith(origin)){
+    			window.localStorage.removeItem(key);
+    		}
+    	}
+    }
+    
+    util.isEditor = function(element){
+    	if(typeof element === "string")
+    		element = document.querySelector(element);
+    	return !(!element.childNodes[0] || !element.childNodes[0].classList.contains("tui-editor-defaultUI"));
+    };
+    
+    util.createOrReplaceEditor = function (selector, callback) {
+    	var elements = document.querySelectorAll(selector);
+        if (!elements.length) return;
+
+        util.editors = [];
+        
+        for (var i = 0; i < elements.length; i++) {
+        	var idx = elements[i].id || i;
+        	if(!this.isEditor(elements[i])){
+        		var editor = util.createUnitEditor(elements[i]);
+        		util.editors[idx] = editor;
+        	}
+        	if(callback && typeof callback === "function")
+        		callback(editor);
+        }
+        clearLocalStorage(w, location.origin);
     };
 
-    util.createViewer = function (selector) {
+    util.createViewer = function (selector, callback) {
         var elements = document.querySelectorAll(selector);
         if (!elements.length) return;
 
@@ -214,7 +267,8 @@
             cloneOptions.el = elements[i];
 
             //내용을 불러와서 설정
-            var content = elements[i].textContent || "";
+            var content = elements[i].dataset.content || "";
+            delete elements[i].dataset.content;
             elements[i].textContent = "";
             cloneOptions.initialValue = content;
 
@@ -223,12 +277,33 @@
             util.viewers[idx] = viewer;
             
             //create copy link in anchor
-            var anchors = viewer.preview.el.querySelectorAll(".header-anchor");
-            for(var i=0; i < anchors.length; i++){
-                anchors[i].setAttribute("id", "header-anchor-"+i);
-                anchors[i].appendChild(util.createCopyElement());                
-            }
+	        viewer.anchors = [];
+	        var anchors = viewer.preview.el.querySelectorAll(".header-anchor");
+	        for(var k=0; k < anchors.length; k++){
+	            anchors[k].setAttribute("id", "header-anchor-"+k);
+	            anchors[k].dataset.depth = anchors[k].tagName.substr(1, 1);
+	            anchors[k].appendChild(util.createCopyElement());
+	            viewer.anchors.push(anchors[k]);
+	        }
+            
+	      //callback after viewer create
+            if(callback && typeof callback === "function")
+            	callback(viewer);
         }
+        
+    };
+    
+    util.createModeChanger = function(selector, callback){
+    	 var elements = document.querySelectorAll(selector);
+         if (!elements.length) return;
+         
+         for(var i=0; i < elements.length; i++){
+        	 var button = elements[i];
+        	 button.addEventListener("click", function(e){
+        		 e.preventDefault();
+        		 util.changeEditorMode();
+        	 });
+         }
     };
     
     util.changeEditorMode = function(){
@@ -257,7 +332,9 @@
     };
 
     //clipboard 복사
-    util.copyToClipboard = function(){
+    util.copyToClipboard = function(e){
+    	e.preventDefault();
+    	
         var el = document.createElement("textarea");
         var id = this.parentElement.parentElement.getAttribute("id");
         el.value = location.origin + location.pathname +"#" + id;

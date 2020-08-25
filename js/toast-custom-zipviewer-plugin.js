@@ -58,7 +58,7 @@ function zipViewerPlugin(){
 				wrapper.classList.remove("fullscreen");
 				iframedoc.querySelector(".zip-viewer").classList.remove("fullscreen");
 				this.classList.add("fa-expand");
-				this.classList.remove("fa-compress")
+				this.classList.remove("fa-compress");
 				refresh.click();
 			}
 			else{

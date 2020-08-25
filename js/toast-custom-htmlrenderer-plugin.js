@@ -17,7 +17,9 @@ function htmlRendererPlugin(){
 //		스크롤 제거를 위한 overflow 설정
 		iframe.scrolling = "no"
 		iframe.style.width = "100%";
+		iframe.style.minHeight = "150px";
 		iframe.style.overflow = "hidden";
+		iframe.style.border = "none";
 		iframe.addEventListener("load", function(){
 			resizeFrame();
 		});
@@ -34,16 +36,16 @@ function htmlRendererPlugin(){
 		iframedoc.dispatchEvent(new Event("load"));
 		
 //		expand button
-		var ex = createExpandButton();
-		ex.addEventListener("click", expandFrame);
-		el.appendChild(ex);
+//		var ex = createExpandButton();
+//		ex.addEventListener("click", expandFrame);
+//		el.appendChild(ex);
 		
 //		resize button
-		var a = createResizeButton();
-		a.addEventListener("click", function(){
-			resizeFrame();
-		});
-		el.appendChild(a);
+//		var a = createResizeButton();
+//		a.addEventListener("click", function(){
+//			resizeFrame();
+//		});
+//		el.appendChild(a);
 		
 		function resizeFrame(){
 			var iframedoc = iframe.contentDocument || iframe.contentWindow.document;
