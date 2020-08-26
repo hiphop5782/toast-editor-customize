@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tabbed-pane</title>
+    <style>
+        /* tabbed pane style */
+        .tabbed-pane {
+            width:100%;
+            box-sizing: border-box;
+        }
+        /* tab header style */
+        .tabbed-pane > .tab-header {
+            display: flex;
+        }
+        .tabbed-pane > .tab-header > .tab-title > span{
+            border:1px solid #ddd;
+            border-bottom: none;
+            padding: 0.2rem 1rem;
+            cursor: pointer;
+            color:#999;
+        }
+        .tabbed-pane.tabbed-split > .tab-header > .tab-title {
+            flex-grow: 1;
+            width:100%;
+        }
+        .tabbed-pane > .tab-header > .tab-title:not(.active):hover > span{
+            background-color:#ddd;
+        }
+        .tabbed-pane > .tab-header > .tab-title.active > span{
+            color:#333;
+            background-color: #eee;
+        }
+        /* tab body style */
+        .tabbed-pane > .tab-body {
+            border:1px solid #ddd;
+        }
+        .tabbed-pane > .tab-body > .tab-content {
+            display: none;
+        }
+        .tabbed-pane.tabbed-split > .tab-body {
+            display:flex;
+        }
+        .tabbed-pane.tabbed-split > .tab-body > .tab-content {
+            flex-grow: 1;
+            display: block;
+            border:1px solid #ddd;
+            width:100%;
+        }
+        .tabbed-pane > .tab-body > .tab-content.active {
+            display:block;
+        }
+        .tabbed-pane > .tab-body > .tab-content > textarea {
+            border:none;
+            resize:none;
+            width:100%;
+            outline:none;
+            min-height:150px;
+        }
+        .tabbed-pane > .tab-body > .tab-content > iframe {
+            border:none;
+            width:100%;
+            overflow: hidden;
+            min-height: 150px;
+        }
+    </style>
+
+    <script>
+        window.addEventListener("load", function(){
+            var titles = document.querySelectorAll(".tab-title");
+            for(var i=0; i < titles.length; i++){
+                titles[i].dataset.index = i;
+                titles[i].addEventListener("click", tabChange);
+            }
+
+            function tabChange(){
+                var idx = this.dataset.index;
+                var cur = document.querySelector(".tab-title.active");
+                var curIdx = cur.dataset.index;
+                if(idx == curIdx){
+                    return;
+                }
+
+                this.classList.add("active");
+                cur.classList.remove("active");
+
+                var contents = document.querySelectorAll(".tab-content");
+                contents[idx].classList.add("active");
+                contents[curIdx].classList.remove("active");
+            }
+        });
+
+        (function(w){
+            if(!w) throw "Window not defined";
+            w.Hacademy = w.Hacademy || {};
+            w.Hacademy.TabPane = w.Hacademy.TabPane || {};
+            w.Hacademy.TabPane.create = function(el, options){
+                
+            }
+        })(window);
+    </script>
+</head>
+
+<body>
+    <div class="tabbed-pane tabbed-split">
+        <div class="tab-header">
+            <div class="tab-title"><span>source code</span></div>
+            <div class="tab-title active"><span>result</span></div>
+        </div>
+        <div class="tab-body">
+            <div class="tab-content">
+                <textarea></textarea>
+            </div>
+            <div class="tab-content active">
+                <iframe></iframe>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="tabbed-pane">
+        <div class="tab-header">
+            <div class="tab-title"><span>source code</span></div>
+            <div class="tab-title active"><span>result</span></div>
+        </div>
+        <div class="tab-body">
+            <div class="tab-content">
+                <textarea></textarea>
+            </div>
+            <div class="tab-content active">
+                <iframe></iframe>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
