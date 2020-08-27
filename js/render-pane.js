@@ -84,14 +84,14 @@
         var content = this.el.dataset.content || "";
         if(!content) return;
 
-        this.content = content;
+        this.content = decodeURIComponent(content);
 
         this.el.removeAttribute("data-content");
 
         var pre = document.createElement("pre");
         var code = document.createElement("code");
         code.classList.add("html");
-        code.textContent = content;
+        code.textContent = this.content;
 
         pre.appendChild(code);
 
