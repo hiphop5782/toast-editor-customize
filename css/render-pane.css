@@ -1,0 +1,74 @@
+/* render pane style */
+.render-pane {
+    width:100%;
+    box-sizing: border-box;
+}
+/* tab header style */
+.render-pane > .tab-header {
+    display: flex;
+}
+.render-pane > .tab-header > .tab-title > span{
+    border:1px solid #ddd;
+    border-bottom: none;
+    padding: 0.2rem 1rem;
+    cursor: pointer;
+    color:#999;
+}
+.render-pane.split-pane > .tab-header > .tab-title {
+    flex-grow: 1;
+    width:100%;
+}
+.render-pane > .tab-header > .tab-title:not(.active):hover > span{
+    background-color:#ddd;
+}
+.render-pane > .tab-header > .tab-title.active > span{
+    color:#333;
+    background-color: #eee;
+}
+/* tab body style */
+.render-pane > .tab-body {
+    border:1px solid #ddd;
+}
+.render-pane.split-pane > .tab-body {
+    display:flex;
+}
+.render-pane > .tab-body > .tab-content {
+    overflow: hidden;
+    display: none;
+}
+.render-pane.split-pane > .tab-body > .tab-content {
+    flex-grow: 1;
+    display: block;
+    border:1px solid #ddd;
+    width:100%;
+}
+.render-pane > .tab-body > .tab-content.active {
+    display:block;
+}
+.render-pane > .tab-body > .tab-content > textarea {
+    border:none;
+    resize:none;
+    width:100%;
+    outline:none;
+    min-height:200px;
+    max-height: 500px;
+}
+.render-pane > .tab-body > .tab-content > pre,
+.render-pane > .tab-body > .tab-content > pre > code {
+    display: block;
+    width:100%;
+    font-size: 1.2rem;
+    box-sizing: border-box !important;
+}
+.render-pane > .tab-body > .tab-content > pre{
+    min-height: 200px;
+    max-height: 500px;
+}
+.render-pane > .tab-body > .tab-content > iframe {
+    border:none;
+    width:100%;
+    overflow: hidden;
+    height:auto;
+    min-height:200px;
+    max-height: 500px;
+}

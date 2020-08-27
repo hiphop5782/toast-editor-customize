@@ -4,135 +4,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tabbed-pane</title>
+    <title>render-pane</title>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.2/build/styles/github-gist.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.2/build/highlight.min.js"></script>
+    <link rel="stylesheet" href="./css/render-pane.css">
     <style>
-        /* tabbed pane style */
-        .tabbed-pane {
-            width:100%;
-            box-sizing: border-box;
-        }
-        /* tab header style */
-        .tabbed-pane > .tab-header {
-            display: flex;
-        }
-        .tabbed-pane > .tab-header > .tab-title > span{
-            border:1px solid #ddd;
-            border-bottom: none;
-            padding: 0.2rem 1rem;
-            cursor: pointer;
-            color:#999;
-        }
-        .tabbed-pane.tabbed-split > .tab-header > .tab-title {
-            flex-grow: 1;
-            width:100%;
-        }
-        .tabbed-pane > .tab-header > .tab-title:not(.active):hover > span{
-            background-color:#ddd;
-        }
-        .tabbed-pane > .tab-header > .tab-title.active > span{
-            color:#333;
-            background-color: #eee;
-        }
-        /* tab body style */
-        .tabbed-pane > .tab-body {
-            border:1px solid #ddd;
-        }
-        .tabbed-pane > .tab-body > .tab-content {
-            display: none;
-        }
-        .tabbed-pane.tabbed-split > .tab-body {
-            display:flex;
-        }
-        .tabbed-pane.tabbed-split > .tab-body > .tab-content {
-            flex-grow: 1;
-            display: block;
-            border:1px solid #ddd;
-            width:100%;
-        }
-        .tabbed-pane > .tab-body > .tab-content.active {
-            display:block;
-        }
-        .tabbed-pane > .tab-body > .tab-content > textarea {
-            border:none;
-            resize:none;
-            width:100%;
-            outline:none;
-            min-height:150px;
-        }
-        .tabbed-pane > .tab-body > .tab-content > iframe {
-            border:none;
-            width:100%;
-            overflow: hidden;
-            min-height: 150px;
-        }
+        
     </style>
-
+    <script src="./js/render-pane.js"></script>
     <script>
         window.addEventListener("load", function(){
-            var titles = document.querySelectorAll(".tab-title");
-            for(var i=0; i < titles.length; i++){
-                titles[i].dataset.index = i;
-                titles[i].addEventListener("click", tabChange);
-            }
-
-            function tabChange(){
-                var idx = this.dataset.index;
-                var cur = document.querySelector(".tab-title.active");
-                var curIdx = cur.dataset.index;
-                if(idx == curIdx){
-                    return;
-                }
-
-                this.classList.add("active");
-                cur.classList.remove("active");
-
-                var contents = document.querySelectorAll(".tab-content");
-                contents[idx].classList.add("active");
-                contents[curIdx].classList.remove("active");
-            }
+            new Hacademy.RenderPane(".custom-pane",{
+                mode:"source"
+            });
+            new Hacademy.RenderPane(".custom-pane2",{
+                mode:"result"
+            });
+            new Hacademy.RenderPane(".custom-pane3",{
+                split:true
+            });
         });
-
-        (function(w){
-            if(!w) throw "Window not defined";
-            w.Hacademy = w.Hacademy || {};
-            w.Hacademy.TabPane = w.Hacademy.TabPane || {};
-            w.Hacademy.TabPane.create = function(el, options){
-                
-            }
-        })(window);
     </script>
 </head>
 
 <body>
-    <div class="tabbed-pane tabbed-split">
-        <div class="tab-header">
-            <div class="tab-title"><span>source code</span></div>
-            <div class="tab-title active"><span>result</span></div>
-        </div>
-        <div class="tab-body">
-            <div class="tab-content">
-                <textarea></textarea>
-            </div>
-            <div class="tab-content active">
-                <iframe></iframe>
-            </div>
-        </div>
-    </div>
-    <hr>
-    <div class="tabbed-pane">
-        <div class="tab-header">
-            <div class="tab-title"><span>source code</span></div>
-            <div class="tab-title active"><span>result</span></div>
-        </div>
-        <div class="tab-body">
-            <div class="tab-content">
-                <textarea></textarea>
-            </div>
-            <div class="tab-content active">
-                <iframe></iframe>
-            </div>
-        </div>
-    </div>
+    <h1>mode:"source"</h1>
+    <div class="custom-pane" data-content="<h1>Hello world</h1>
+<h1>Hello world</h1>
+<h1>Hello world</h1>
+<h1>Hello world</h1>
+<h1>Hello world</h1>"></div>
+<hr>
+<h1>mode:"result"</h1>
+<div class="custom-pane2" data-content="<h1>Hello world</h1>
+<h1>Hello world</h1>
+<h1>Hello world</h1>
+<h1>Hello world</h1>
+<h1>Hello world</h1>"></div>
+<hr>
+<h1>split:true</h1>
+<div class="custom-pane3" data-content="<h1>Hello world</h1>
+<h1>Hello world</h1>
+<h1>Hello world</h1>
+<h1>Hello world</h1>
+<h1>Hello world</h1>"></div>
 </body>
 
 </html>
