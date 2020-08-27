@@ -11,8 +11,7 @@
         }
 
         var defaultOptions = {
-            split:false,        //enable split mode
-            mode:"result",  //result or source
+            mode:"result",  //result or source or split
             edit:false,         //enable edit mode
         };
 
@@ -23,7 +22,7 @@
         this.displayContent();
         
         //split 모드가 아닐 경우 mode 설정
-        if(!this.options.split){
+        if(this.options.mode !== "split"){
             this.tabChange(this.options.mode);
         }
         else{
@@ -71,7 +70,7 @@
         this.el.appendChild(headerDiv);
         this.el.appendChild(bodyDiv);
 
-        if(!this.options.split){
+        if(this.options.mode !== "split"){
             sourceTitleDiv.addEventListener("click", function(){
                 app.tabChange("source");
             });

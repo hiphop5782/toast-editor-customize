@@ -59,10 +59,13 @@
     width:100%;
     font-size: 1.2rem;
     box-sizing: border-box !important;
+    height:100%;
 }
 .render-pane > .tab-body > .tab-content > pre{
     min-height: 200px;
     max-height: 500px;
+    margin:0;
+    padding:0.3rem;
 }
 .render-pane > .tab-body > .tab-content > iframe {
     border:none;

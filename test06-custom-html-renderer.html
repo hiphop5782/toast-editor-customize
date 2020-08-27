@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Html Renderer</title>
+    <style>
+        #hacademy-custom-html-render-app,
+        #hacademy-custom-html-render-app > *{
+            box-sizing: border-box;
+        }
+        #hacademy-custom-html-render-app .unit{
+        }
+        #hacademy-custom-html-render-app .render-wrapper{
+        }
+    </style>
+    <script>
+        function LineElement(text, type){
+            this.text = text;
+            this.type = type;
+        }
+        LineElement.MULTI_LINE_TEXT = 0;
+        LineElement.SINGLE_LINE_TEXT = 1;
+        LineElement.MULTI_LINE_INPUT = 2;
+        LineElement.SINGLE_LINE_INPUT = 3;        
+    </script>
+</head>
+<body>
+    <div id="hacademy-custom-html-render-app">
+        <div class="code-display">
+            <div class="code-unit" v-for="(unit, index) in src" :key="index">
+                <span v-if="unit.type === 1">{{unit.text}}</span>
+                <span v-else-if="unit.type === 3">
+                    <input type="text" v-model="unit.text">
+                </span>
+            </div>
+            <hr>
+            <div class="render-display" v-html="renderHTML"></div>
+        </div>        
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+        var renderApp = new Vue({
+            el:"#hacademy-custom-html-render-app",
+            data:{
+                src:[
+                    new LineElement("<style>", LineElement.SINGLE_LINE_TEXT),
+                    new LineElement("h1{", LineElement.SINGLE_LINE_TEXT),
+                    new LineElement("color:red;", LineElement.SINGLE_LINE_INPUT),
+                    new LineElement("}", LineElement.SINGLE_LINE_TEXT),
+                    new LineElement("</style>", LineElement.SINGLE_LINE_TEXT),
+                    new LineElement("<h1>Hello Renderer</h1>", LineElement.SINGLE_LINE_TEXT),
+                ],
+                renderHTML:"",
+            },
+            methods:{
+                toHTML:function(){
+                    return this.src.map(s=>s['text']).join("\n");
+                }
+            },
+            watch:{
+                src:{
+                    deep:true,
+                    handler:function(){
+                        this.renderHTML = this.toHTML();
+                    },
+                },
+            },
+            computed:{
+                
+            },
+            created:function(){
+                this.renderHTML = this.toHTML();
+            },
+            mounted:function(){},
+            updated:function(){}
+        });
+    </script>
+</body>
+</html>

@@ -40,7 +40,9 @@
         ,katexPlugin//custom katex plugin
         ,youtubePlugin//custom youtube plugin
         ,zipViewerPlugin//custom zip-viewer plugin
-        ,htmlRendererPlugin//custom html-renderer plugin
+        ,htmlRendererPlugin//custom html-renderer plugin(result base)
+        ,htmlRendererSourcePlugin//custom html-renderer plugin(source base)
+        ,htmlRendererSplitPlugin//custom html-renderer plugin(split base)
     ];
     
     const customHTMLRenderer = {
