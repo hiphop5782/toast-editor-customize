@@ -54,6 +54,22 @@
         headerDiv.appendChild(sourceTitleDiv);
         headerDiv.appendChild(resultTitleDiv);
 
+        var copyElementDiv = document.createElement("div");
+        copyElementDiv.classList.add("header-element");
+        var copyElement = document.createElement("span");
+        copyElement.classList.add("copy-element");
+        copyElement.addEventListener("click", function(){
+            //copy to clipboard
+            if(app.content){
+                copyToClipboard(app.content);
+                this.textContent = "copied!";
+                this.style.color = "black";
+            }
+        });
+        copyElement.textContent = "copy";
+        copyElementDiv.appendChild(copyElement);
+        headerDiv.appendChild(copyElementDiv);
+
         //create body
         var bodyDiv = document.createElement("div");
         bodyDiv.classList.add("tab-body");
@@ -156,4 +172,13 @@
 
         this.curMode = mode;
     };
+
+    function copyToClipboard(text){
+        var el = document.createElement("textarea");
+        document.body.appendChild(el);
+        el.value = text;
+        el.select();
+        document.execCommand("copy");
+        document.body.removeChild(el);       
+    }
 })(window);
