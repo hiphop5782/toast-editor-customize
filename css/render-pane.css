@@ -2,10 +2,24 @@
 .render-pane {
     width:100%;
     box-sizing: border-box;
+    position:relative;
 }
 /* tab header style */
 .render-pane > .tab-header {
     display: flex;
+}
+.render-pane > .tab-header > .header-element > .copy-element{
+    position:absolute;
+    right:0;
+    top:0;
+    margin-top:-6px;
+    border-bottom: none;
+    padding: 0.2rem 1rem;
+    cursor:pointer;
+    color:#84b4c8;
+}
+.render-pane > .tab-header > .header-element > .copy-element:hover {
+    color:red;
 }
 .render-pane > .tab-header > .tab-title > span{
     border:1px solid #ddd;
@@ -57,12 +71,15 @@
 .render-pane > .tab-body > .tab-content > pre > code {
     display: block;
     width:100%;
-    font-size: 1.2rem;
+    font-size: 1rem;
     box-sizing: border-box !important;
+    height:100%;
 }
 .render-pane > .tab-body > .tab-content > pre{
     min-height: 200px;
     max-height: 500px;
+    margin:0;
+    padding:0.3rem;
 }
 .render-pane > .tab-body > .tab-content > iframe {
     border:none;

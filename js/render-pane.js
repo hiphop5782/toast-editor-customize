@@ -11,8 +11,7 @@
         }
 
         var defaultOptions = {
-            split:false,        //enable split mode
-            mode:"result",  //result or source
+            mode:"result",  //result or source or split
             edit:false,         //enable edit mode
         };
 
@@ -23,7 +22,7 @@
         this.displayContent();
         
         //split 모드가 아닐 경우 mode 설정
-        if(!this.options.split){
+        if(this.options.mode !== "split"){
             this.tabChange(this.options.mode);
         }
         else{
@@ -55,6 +54,22 @@
         headerDiv.appendChild(sourceTitleDiv);
         headerDiv.appendChild(resultTitleDiv);
 
+        var copyElementDiv = document.createElement("div");
+        copyElementDiv.classList.add("header-element");
+        var copyElement = document.createElement("span");
+        copyElement.classList.add("copy-element");
+        copyElement.addEventListener("click", function(){
+            //copy to clipboard
+            if(app.content){
+                copyToClipboard(app.content);
+                this.textContent = "copied!";
+                this.style.color = "black";
+            }
+        });
+        copyElement.textContent = "copy";
+        copyElementDiv.appendChild(copyElement);
+        headerDiv.appendChild(copyElementDiv);
+
         //create body
         var bodyDiv = document.createElement("div");
         bodyDiv.classList.add("tab-body");
@@ -71,7 +86,7 @@
         this.el.appendChild(headerDiv);
         this.el.appendChild(bodyDiv);
 
-        if(!this.options.split){
+        if(this.options.mode !== "split"){
             sourceTitleDiv.addEventListener("click", function(){
                 app.tabChange("source");
             });
@@ -85,14 +100,14 @@
         var content = this.el.dataset.content || "";
         if(!content) return;
 
-        this.content = content;
+        this.content = decodeURIComponent(content);
 
         this.el.removeAttribute("data-content");
 
         var pre = document.createElement("pre");
         var code = document.createElement("code");
         code.classList.add("html");
-        code.textContent = content;
+        code.textContent = this.content;
 
         pre.appendChild(code);
 
@@ -157,4 +172,13 @@
 
         this.curMode = mode;
     };
+
+    function copyToClipboard(text){
+        var el = document.createElement("textarea");
+        document.body.appendChild(el);
+        el.value = text;
+        el.select();
+        document.execCommand("copy");
+        document.body.removeChild(el);       
+    }
 })(window);
