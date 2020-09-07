@@ -88,7 +88,14 @@
         //create source code unit
         var sourceCode = this.options.sourceCode;
         for(var i=0; i < sourceCode.length; i++){
-            var unit = this.isTab(sourceCode, i) ? this.createTextUnit("\t") : this.createTextUnit(sourceCode[i]);
+            var unit;
+            if(this.isTab(sourceCode, i)){
+                unit = this.createTextUnit("\t");
+                i += 3;
+            }
+            else{
+                unit = this.createTextUnit(sourceCode[i]);
+            }
             sourceEl.appendChild(unit);
         }
         sourceEl.querySelector(".typing-unit").classList.add("current");
@@ -122,7 +129,7 @@
         var count = 0;
         for(var i=index; i < text.length; i++){
             if(text[i].charCodeAt(0) === 32){
-                count++;
+                if(++count == 4) break;
             }
             else{
                 break;
