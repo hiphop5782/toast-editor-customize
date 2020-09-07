@@ -6,6 +6,7 @@
     var defaultOptions = {
         strict:false,
         progress:false,
+        refresh:true,
     };
 
     window.Hacademy = window.Hacademy || {};
@@ -65,6 +66,25 @@
             this.processTyping(e);
         };
 
+        //create refresh panel
+        if(this.options.refresh){
+            var refreshEl = document.createElement("div");
+            refreshEl.classList.add("refresh-panel");
+            
+            var icon = document.createElement("i");
+            icon.classList.add("fa","fa-refresh");
+            icon.addEventListener("click", ()=>{
+                this.refreshAll();
+            });
+            
+            refreshEl.appendChild(icon);
+
+            sourceEl.appendChild(refreshEl);
+
+            this.ui.refreshEl = refreshEl;
+        }
+
+        //create source code unit
         var sourceCode = this.options.sourceCode;
         for(var i=0; i < sourceCode.length; i++){
             var unit;
@@ -99,23 +119,28 @@
 
             this.ui.progressEl = progressEl;
         }
+
     };
 
     TypingPane.prototype.createTextUnit = function(t, m){
         var span = document.createElement("span");
         span.classList.add("typing-unit");
         
-        if(t.charCodeAt(0) === 10){//enter
-            span.classList.add("enter");
-            span.textContent = "↵";
+        switch(t.charCodeAt(0)){
+            case 10://enter
+                span.classList.add("enter");
+                span.textContent = "↵";
+                break;
+            case 9://tab
+                span.classList.add("tab");
+                span.textContent = "→";
+                break;
+            case 32://space
+                span.classList.add("space");
+            default:
+                span.textContent = t;
         }
-        else if(t.charCodeAt(0) === 9){//tab
-            span.classList.add("tab");
-            span.textContent = "→";
-        }
-        else{
-            span.textContent = t;
-        }
+
         if(m){
             span.classList.add(m);
         }
@@ -126,9 +151,9 @@
         var cur = this.getCurrentUnit();
         if(!cur) return;
 
-        var prev = this.getPreviousUnit();
+        var prev = this.getPreviousUnit();//이전 항목
         var next = this.getNextUnit();
-
+        console.log(prev, next);
         
         var text = cur.textContent;
 
@@ -159,6 +184,7 @@
     };
 
     TypingPane.prototype.isNormalInput = function(k){
+        console.log(k);
         switch(k){
             case 16://SHIFT(LEFT, RIGHT)
             case 27://ESC
@@ -193,6 +219,11 @@
             case 120://PrintScreen
             case 121://Scroll Lock
             case 122://PAUSE
+            case 37://LEFT ARROW
+            case 38://UP ARROW
+            case 39://RIGHT ARROW
+            case 40://DOWN ARROW
+            case 12://NON-NUMLOCK 5
             //case 13://ENTER
                 return false;
         }
@@ -222,13 +253,19 @@
     Hacademy.TypingPane.prototype.getNextUnit = function(){
         var cur = this.getCurrentUnit();
         if(!cur) return null;
-        return cur.nextElementSibling || null;
+        var next = cur.nextElementSibling || null;
+        if(!next || !next.classList.contains("typing-unit")) 
+            return null;
+        return next;
     };
 
     Hacademy.TypingPane.prototype.getPreviousUnit = function(){
         var cur = this.getCurrentUnit();
         if(!cur) return null;
-        return cur.previousElementSibling || null;
+        var prev = cur.previousElementSibling || null;
+        if(!prev || !prev.classList.contains("typing-unit")) 
+            return null;
+        return prev;
     };
 
     Hacademy.TypingPane.prototype.convertTextValue = function(text){
@@ -249,10 +286,25 @@
 
     Hacademy.TypingPane.prototype.refreshProgress = function(){
         var progressEl = this.ui.progressEl;
+        if(!progressEl) return;
+
         var sourceEl = this.ui.sourceEl;
 
         var correctUnit = sourceEl.querySelectorAll(".typing-unit.correct") || [];
         progressEl.querySelector(".count").textContent = correctUnit.length;
     };
 
+    Hacademy.TypingPane.prototype.refreshAll = function(){
+        var unitList = this.ui.sourceEl.querySelectorAll(".typing-unit");
+        if(unitList.length > 0){
+            for(var i=0; i < unitList.length; i++){
+                unitList[i].classList.remove("correct", "incorrect", "current");
+            }
+            unitList[0].classList.add("current");
+        }
+        
+        if(this.ui.progressEl){
+            this.ui.progressEl.querySelector(".count").textContent = "0";
+        }
+    };
 })(window);
