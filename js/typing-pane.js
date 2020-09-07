@@ -153,7 +153,6 @@
 
         var prev = this.getPreviousUnit();//이전 항목
         var next = this.getNextUnit();
-        console.log(prev, next);
         
         var text = cur.textContent;
 
@@ -184,7 +183,6 @@
     };
 
     TypingPane.prototype.isNormalInput = function(k){
-        console.log(k);
         switch(k){
             case 16://SHIFT(LEFT, RIGHT)
             case 27://ESC
