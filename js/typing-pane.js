@@ -7,6 +7,7 @@
         strict:false,
         progress:false,
         refresh:true,
+        tab:4,
     };
 
     window.Hacademy = window.Hacademy || {};
@@ -87,15 +88,10 @@
         //create source code unit
         var sourceCode = this.options.sourceCode;
         for(var i=0; i < sourceCode.length; i++){
-            var unit;
-            if(i == 0){
-                unit = this.createTextUnit(sourceCode[i], "current");
-            }
-            else{
-                unit = this.createTextUnit(sourceCode[i]);
-            }
+            var unit = this.isTab(sourceCode, i) ? this.createTextUnit("\t") : this.createTextUnit(sourceCode[i]);
             sourceEl.appendChild(unit);
         }
+        sourceEl.querySelector(".typing-unit").classList.add("current");
 
         //append progress component
         if(this.options.progress){
@@ -120,6 +116,19 @@
             this.ui.progressEl = progressEl;
         }
 
+    };
+
+    TypingPane.prototype.isTab = function(text, index){
+        var count = 0;
+        for(var i=index; i < text.length; i++){
+            if(text[i].charCodeAt(0) === 32){
+                count++;
+            }
+            else{
+                break;
+            }
+        }
+        return count === this.options.tab;
     };
 
     TypingPane.prototype.createTextUnit = function(t, m){

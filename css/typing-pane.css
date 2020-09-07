@@ -6,6 +6,7 @@
     font-size:1.2rem;
     position:relative;
     overflow: hidden;
+    white-space: pre-wrap;
     word-break:break-all;
 }
 .hacademy-typing-pane > .progress-panel {
@@ -40,6 +41,7 @@
     padding-left:0.5rem;
     padding-right:0.5rem;
 }
+
 .hacademy-typing-pane > .typing-unit.enter.correct::after,
 .hacademy-typing-pane > .typing-unit.enter.incorrect::after,
 .hacademy-typing-pane > .typing-unit.enter.current::after,
