@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Pane</title>
+    <style>
+        .hacademy-typing-pane {
+            box-sizing: border-box;
+            border:1px solid gray;
+            padding:1rem;
+            margin:1rem 0;
+            font-size:1.5rem;
+        }
+        .hacademy-typing-pane .typing-unit {
+            color:#999;
+            position:relative;
+        }
+        .hacademy-typing-pane .typing-unit.correct {
+            color:blue;
+        }
+        .hacademy-typing-pane .typing-unit.incorrect {
+            color:red;
+        }
+        .hacademy-typing-pane .typing-unit.current {
+            background-color: black;
+            color:white;
+        }
+        .hacademy-typing-pane.strict-mode .typing-unit.incorrect::after{
+            content:"↓";
+            position:absolute;
+            top:0;
+            left:0;
+            transform: translate(-25%, -100%);
+            color:red;
+        }
+    </style>
+    <script>
+        
+    </script>
+</head>
+<body>
+    <div class="hacademy-typing-pane">
+        <pre><code><span class="typing-unit">S</span><span class="typing-unit">y</span><span class="typing-unit">s</span><span class="typing-unit">t</span><span class="typing-unit">e</span><span class="typing-unit">m</span><span class="typing-unit">.</span><span class="typing-unit">o</span><span class="typing-unit">u</span><span class="typing-unit">t</span><span class="typing-unit">.</span><span class="typing-unit">p</span><span class="typing-unit">r</span><span class="typing-unit">i</span><span class="typing-unit">n</span><span class="typing-unit">t</span><span class="typing-unit">l</span><span class="typing-unit">n</span><span class="typing-unit">(</span><span class="typing-unit">"</span><span class="typing-unit">H</span><span class="typing-unit">e</span><span class="typing-unit">l</span><span class="typing-unit">l</span><span class="typing-unit">o</span><span class="typing-unit"> </span><span class="typing-unit">W</span><span class="typing-unit">o</span><span class="typing-unit">r</span><span class="typing-unit">l</span><span class="typing-unit">d</span><span class="typing-unit">!</span><span class="typing-unit">"</span><span class="typing-unit">)</span><span class="typing-unit">;</span></code></pre>
+    </div>
+    <div class="hacademy-typing-pane">
+        <pre><code><span class="typing-unit correct">S</span><span class="typing-unit correct">y</span><span class="typing-unit correct">s</span><span class="typing-unit correct">t</span><span class="typing-unit incorrect">e</span><span class="typing-unit incorrect">m</span><span class="typing-unit current">.</span><span class="typing-unit">o</span><span class="typing-unit">u</span><span class="typing-unit">t</span><span class="typing-unit">.</span><span class="typing-unit">p</span><span class="typing-unit">r</span><span class="typing-unit">i</span><span class="typing-unit">n</span><span class="typing-unit">t</span><span class="typing-unit">l</span><span class="typing-unit">n</span><span class="typing-unit">(</span><span class="typing-unit">"</span><span class="typing-unit">H</span><span class="typing-unit">e</span><span class="typing-unit">l</span><span class="typing-unit">l</span><span class="typing-unit">o</span><span class="typing-unit"> </span><span class="typing-unit">W</span><span class="typing-unit">o</span><span class="typing-unit">r</span><span class="typing-unit">l</span><span class="typing-unit">d</span><span class="typing-unit">!</span><span class="typing-unit">"</span><span class="typing-unit">)</span><span class="typing-unit">;</span></code></pre>
+    </div>
+    <div class="hacademy-typing-pane strict-mode">
+        <pre><code><span class="typing-unit correct">S</span><span class="typing-unit correct">y</span><span class="typing-unit correct">s</span><span class="typing-unit correct">t</span><span class="typing-unit incorrect current">e</span><span class="typing-unit">m</span><span class="typing-unit">.</span><span class="typing-unit">o</span><span class="typing-unit">u</span><span class="typing-unit">t</span><span class="typing-unit">.</span><span class="typing-unit">p</span><span class="typing-unit">r</span><span class="typing-unit">i</span><span class="typing-unit">n</span><span class="typing-unit">t</span><span class="typing-unit">l</span><span class="typing-unit">n</span><span class="typing-unit">(</span><span class="typing-unit">"</span><span class="typing-unit">H</span><span class="typing-unit">e</span><span class="typing-unit">l</span><span class="typing-unit">l</span><span class="typing-unit">o</span><span class="typing-unit"> </span><span class="typing-unit">W</span><span class="typing-unit">o</span><span class="typing-unit">r</span><span class="typing-unit">l</span><span class="typing-unit">d</span><span class="typing-unit">!</span><span class="typing-unit">"</span><span class="typing-unit">)</span><span class="typing-unit">;</span></code></pre>
+    </div>
+</body>
+</html>

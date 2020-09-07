@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Pane</title>
+    <link rel="stylesheet" type="text/css" href="./css/typing-pane.css">
+    <script src="./js/typing-pane.js"></script>
+    <script>
+        window.addEventListener("load", function(){
+            var ex1 = new Hacademy.TypingPane("#example1");
+            var ex2 = new Hacademy.TypingPane("#example2", {
+                strict:true,
+            });
+            var ex3 = new Hacademy.TypingPane("#example3");
+            var ex4 = new Hacademy.TypingPane("#example4",{
+                strict:true,
+            });
+            var ex5 = new Hacademy.TypingPane("#example5",{
+                strict:true,
+                progress:true,
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="example1" data-source-code="System.out.println(%22Hello World!%22);"></div>
+    <div id="example2" data-source-code="System.out.println(%22This is strict mode%22);"></div>
+    <div id="example3" data-source-code="System.out.println(%22Multiline contents%22);
+%09System.out.println(%22Multiline contents%22);
+%09System.out.println(%22Multiline contents%22);"></div>
+<div id="example4" data-source-code="System.out.println(%22This is strict mode%22);
+%09System.out.println(%22This is strict mode%22);
+%09System.out.println(%22This is strict mode%22);"></div>
+<div id="example5" data-source-code="System.out.println(%22This is strict mode%22);
+%09System.out.println(%22This is strict mode%22);
+%09System.out.println(%22This is strict mode%22);"></div>
+</body>
+</html>

@@ -43,6 +43,8 @@
         ,htmlRendererPlugin//custom html-renderer plugin(result base)
         ,htmlRendererSourcePlugin//custom html-renderer plugin(source base)
         ,htmlRendererSplitPlugin//custom html-renderer plugin(split base)
+        ,typingPlugin//custom typing plugin(non-strict)
+        ,typingStrictPlugin//custom typing plugin(strict)
     ];
     
     const customHTMLRenderer = {

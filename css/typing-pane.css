@@ -1,0 +1,46 @@
+.hacademy-typing-pane {
+    box-sizing: border-box;
+    border:1px solid gray;
+    padding:1rem;
+    margin:1rem 0;
+    font-size:1.2rem;
+    position:relative;
+    overflow: hidden;
+    word-break:break-all;
+}
+.hacademy-typing-pane > .progress-panel {
+    display:block;
+    text-align:right;
+    font-size:1rem;
+}
+.hacademy-typing-pane > .progress-panel > span{
+    margin:0 0.15rem;
+}
+.hacademy-typing-pane > .progress-panel > .count{
+    color:blue;
+}
+.hacademy-typing-pane > .typing-unit {
+    color:#999;
+    position:relative;
+}
+.hacademy-typing-pane > .typing-unit.tab{
+    padding-left:0.5rem;
+    padding-right:0.5rem;
+}
+.hacademy-typing-pane > .typing-unit.enter.correct::after,
+.hacademy-typing-pane > .typing-unit.enter.incorrect::after,
+.hacademy-typing-pane > .typing-unit.enter.current::after,
+.hacademy-typing-pane > .typing-unit.enter::after{
+    content:"";
+    display:block;
+}
+.hacademy-typing-pane > .typing-unit.correct {
+    color:blue;
+}
+.hacademy-typing-pane > .typing-unit.incorrect {
+    color:red;
+}
+.hacademy-typing-pane > .typing-unit.current {
+    background-color: black;
+    color:white;
+}
