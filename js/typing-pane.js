@@ -33,6 +33,9 @@
 
         this.initializeUI();
 
+        if(this.options.refresh){
+            this.refreshProgress();
+        }
     };
 
     var TypingPane = window.Hacademy.TypingPane;
@@ -91,7 +94,7 @@
             var unit;
             if(this.isTab(sourceCode, i)){
                 unit = this.createTextUnit("\t");
-                i += 3;
+                i += (this.options.tab - 1);
             }
             else{
                 unit = this.createTextUnit(sourceCode[i]);
@@ -106,12 +109,10 @@
             progressEl.classList.add("progress-panel");
 
             var span1 = document.createElement("span");
-            span1.textContent = "0";
             span1.classList.add("count");
             var span2 = document.createElement("span");
             span2.textContent = "/";
             var span3 = document.createElement("span");
-            span3.textContent = sourceCode.length;
             span3.classList.add("total");
 
             progressEl.appendChild(span1);
@@ -303,6 +304,9 @@
         if(!progressEl) return;
 
         var sourceEl = this.ui.sourceEl;
+
+        var allUnit = sourceEl.querySelectorAll(".typing-unit") || [];
+        progressEl.querySelector(".total").textContent = allUnit.length;
 
         var correctUnit = sourceEl.querySelectorAll(".typing-unit.correct") || [];
         progressEl.querySelector(".count").textContent = correctUnit.length;
