@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>java runner demo</title>
+    <link rel="stylesheet" type="text/css" href="./css/hacademy-java-runner.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./js/hacademy-java-runner.js"></script>
+    <script>
+        window.addEventListener("load", function(){
+            var ex1 = new Hacademy.JavaRunner("#runner1");
+            var ex2 = new Hacademy.JavaRunner("#runner2",{
+                code:"System.out.println(\"Hello Java\");"
+            });
+            var ex3 = new Hacademy.JavaRunner("#runner3");
+        });
+    </script>
+</head>
+<body>
+    <div id="runner1"></div>
+    <div id="runner2"></div>
+    <div id="runner3" data-source-code="System.out.println(%22Hello world%22);"></div>
+</body>
+</html>

@@ -7,6 +7,7 @@
     <style>
         .hacademy-runner-pane {
             border:1px solid black;
+            padding:0.5rem;
         }
         .hacademy-runner-pane * {
             box-sizing: border-box;
@@ -16,25 +17,49 @@
             display:block;
             clear:both;
         }
-        .hacademy-runner-pane > .content-panel {
-            
-        }
         .hacademy-runner-pane > .content-panel > .editor-panel {
             width:100%;
         }
         .hacademy-runner-pane >  .content-panel > .editor-panel > textarea {
             width:100%;
             outline:none;
-            border:none;
+            border:1px solid gray;
             resize:vertical;
             padding:0.5rem;
             min-height: 5rem;
         }
-        .hacademy-runner-pane > .content-panel > .button-panel > .execute-button {
-            width:100%;
+        .hacademy-runner-pane > .content-panel > .button-panel {
+            text-align:right;
+        }
+        .hacademy-runner-pane > .content-panel > .button-panel > button{
+            padding:0.25rem;
+            cursor: pointer;
+            min-width: 100px;
+            margin-left: 10px;
+        }
+        .hacademy-runner-pane > .content-panel > .button-panel > .execute-button{
+            background-color: white;
+            border:2px solid #008CBA;
+        }
+        .hacademy-runner-pane > .content-panel > .button-panel > .execute-button:hover{
+            background-color: #008CBA;
+            color:white;
+        }
+        .hacademy-runner-pane > .content-panel > .button-panel > .clear-button{
+            background-color: white;
+            border:2px solid #555555;
+        }
+        .hacademy-runner-pane > .content-panel > .button-panel > .clear-button:hover{
+            background-color: #555555;
+            color:white;
         }
         .hacademy-runner-pane > .content-panel > .result-panel {
-            max-height: 300px;
+            max-height: 200px;
+            white-space: pre-line;
+            overflow: auto;
+        }
+        .hacademy-runner-pane > .content-panel > .result-panel > pre {
+            padding:0.5rem;
         }
     </style>
 
@@ -45,10 +70,13 @@
             
             var document = window.document;
 
-            var defaultOptions = {};
+            var defaultOptions = {
+                code:"",
+                line:10,
+            };
 
             window.Hacademy = window.Hacademy || {};
-            window.Hacademy.JavaSimpleRunner = function(el, options){
+            window.Hacademy.JavaRunner = function(el, options){
                 if(typeof el === "string"){
                     el = document.querySelector(el);
                 }
@@ -57,6 +85,10 @@
                 this.el = el;
 
                 this.options = Object.assign({}, defaultOptions, options);
+                this.options.code = decodeURIComponent(this.options.code || this.el.dataset.sourceCode || "");
+                if(this.dataset.sourceCode){
+                    delete this.dataset.sourceCode;
+                }
 
                 this.ui = {
                     el:el
@@ -65,7 +97,7 @@
                 this.initializeUI();
             };
 
-            var Runner = window.Hacademy.JavaSimpleRunner;
+            var Runner = window.Hacademy.JavaRunner;
             
             Runner.prototype.initializeUI = function(){
                 var el = this.ui.el;
@@ -83,26 +115,41 @@
                 var textareaDiv = createElement("div", "editor-panel");
 
                 var textarea = createElement("textarea");
+                if(this.options.code){
+                    var count = Math.min(this.options.code.split(/\n/).length, this.options.line);
+                    textarea.style.minHeight = count+"rem";
+                }
+                textarea.value = this.options.code;
+                
+                                
                 textareaDiv.appendChild(textarea);
 
                 //add button
                 var buttonDiv = createElement("div", "button-panel");
-                var button = createElement("button", "execute-button", "실행(execute)");
+                var button = createElement("button", "execute-button", "실행");
                 button.addEventListener("click",()=>{
                     var code = textarea.value;
                     if(!code) return false;
-
+                    this.loadingStart();
                     axios.post("http://localhost/runner/java/simple", {
                         version:8,
                         code:code
                     })
                     .then(result=>{
                         this.setResult(result.data);
+                        this.loadingFinish();
                     }).catch(e=>{
                         this.setError(e.response.data);
+                        this.loadingFinish();
                     });
                 });
                 buttonDiv.appendChild(button);
+
+                var clearBtn = createElement("button", "clear-button", "초기화");
+                clearBtn.addEventListener("click", ()=>{
+                    this.ui.resultDiv.textContent = "";
+                });
+                buttonDiv.appendChild(clearBtn);
 
                 contentDiv.appendChild(textareaDiv);
                 contentDiv.appendChild(buttonDiv);
@@ -126,20 +173,20 @@
                 this.ui.button.disabled = true;
             };
             Runner.prototype.loadingFinish = function(){
-                this.ui.button.textContent = "실행(execute)";
+                this.ui.button.textContent = "실행";
                 this.ui.button.disabled = false;
             };
 
             Runner.prototype.setResult = function(res){
                 this.ui.resultDiv.classList.remove("success", "error");
                 this.ui.resultDiv.classList.add("success");
-                this.ui.resultDiv.textContent = res;
+                this.ui.resultDiv.innerHTML = "<pre><code>"+res+"</code></pre>";
             };
 
             Runner.prototype.setError = function(res){
                 this.ui.resultDiv.classList.remove("success", "error");
                 this.ui.resultDiv.classList.add("error");
-                this.ui.resultDiv.textContent = res;
+                this.ui.resultDiv.innerHTML = "<pre><code>"+res+"</code></pre>";
             };
 
             function createElement(tagName, className, innerText){
@@ -154,11 +201,17 @@
     </script>
     <script>
         window.addEventListener("load", function(){
-            var ex1 = new Hacademy.JavaSimpleRunner("#runner1");
+            var ex1 = new Hacademy.JavaRunner("#runner1");
+            var ex2 = new Hacademy.JavaRunner("#runner2",{
+                code:"System.out.println(\"Hello Java\");"
+            });
+            var ex3 = new Hacademy.JavaRunner("#runner3");
         });
     </script>
 </head>
 <body>
     <div id="runner1"></div>
+    <div id="runner2"></div>
+    <div id="runner3" data-source-code="System.out.println(%22Hello world%22);"></div>
 </body>
 </html>
