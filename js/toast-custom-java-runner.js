@@ -12,9 +12,9 @@ function javaSimpleRunner(){
     
     function render(wrapperId, sourceCode){
 		var el = document.getElementById(wrapperId);
-		var app = new Hacademy.TypingPane(el, {
-            strict:false,
-            progress:true,
+		var app = new Hacademy.JavaRunner(el, {
+            code:sourceCode,
+            mode:"simple"
 		});
 	}
 }
@@ -23,14 +23,14 @@ function javaMainRunner(){
     toastui.Editor.codeBlockManager.setReplacer("java-main", function (sourceCode) {
         const wrapperId = 'java-main' + Math.random().toString(36).substr(2, 10);
         setTimeout(render.bind(null, wrapperId, sourceCode), 0);
-        return '<div id=' + wrapperId + ' data-source-code="'+encodeURIComponent(sourceCode)+'"></div>';
+        return '<div id=' + wrapperId + '></div>';
     });
     
     function render(wrapperId, sourceCode){
 		var el = document.getElementById(wrapperId);
-		var app = new Hacademy.TypingPane(el, {
-            strict:true,
-            progress:true,
+		var app = new Hacademy.JavaRunner(el, {
+            code:sourceCode,
+            mode:"main"
 		});
 	}
 }

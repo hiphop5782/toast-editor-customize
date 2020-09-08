@@ -45,6 +45,8 @@
         ,htmlRendererSplitPlugin//custom html-renderer plugin(split base)
         ,typingPlugin//custom typing plugin(non-strict)
         ,typingStrictPlugin//custom typing plugin(strict)
+        ,javaSimpleRunner//custom java runner(simple)
+        ,javaMainRunner//custom java runner(main)
     ];
     
     const customHTMLRenderer = {

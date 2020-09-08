@@ -152,8 +152,8 @@
 
     Runner.prototype.getURI = function(){
         switch(this.options.mode){
-            case "simple": return this.baseUrl + "/runner/simple";
-            case "main": return this.baseUrl + "/runner/main";
+            case "simple": return this.options.baseUrl + "/runner/simple";
+            case "main": return this.options.baseUrl + "/runner/main";
         }
         return null;
     };

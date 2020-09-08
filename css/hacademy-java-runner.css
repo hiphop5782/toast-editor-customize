@@ -3,7 +3,7 @@
     padding:0.5rem;
 }
 .hacademy-runner-pane * {
-    box-sizing: border-box;
+    box-sizing: border-box !important;
 }
 .hacademy-runner-pane::after {
     content:"";
@@ -29,6 +29,7 @@
     cursor: pointer;
     min-width: 100px;
     margin-left: 10px;
+    color:black;
 }
 .hacademy-runner-pane > .content-panel > .button-panel > .execute-button{
     background-color: white;
