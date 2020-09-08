@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>java runner demo</title>
+    <style>
+        .hacademy-runner-pane {
+            border:1px solid black;
+        }
+        .hacademy-runner-pane * {
+            box-sizing: border-box;
+        }
+        .hacademy-runner-pane::after {
+            content:"";
+            display:block;
+            clear:both;
+        }
+        .hacademy-runner-pane > .content-panel {
+            
+        }
+        .hacademy-runner-pane > .content-panel > .editor-panel {
+            width:100%;
+        }
+        .hacademy-runner-pane >  .content-panel > .editor-panel > textarea {
+            width:100%;
+            outline:none;
+            border:none;
+            resize:vertical;
+            padding:0.5rem;
+            min-height: 5rem;
+        }
+        .hacademy-runner-pane > .content-panel > .button-panel > .execute-button {
+            width:100%;
+        }
+        .hacademy-runner-pane > .content-panel > .result-panel {
+            max-height: 300px;
+        }
+    </style>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        (function(window){
+            if(!window) throw "Window not defined";
+            
+            var document = window.document;
+
+            var defaultOptions = {};
+
+            window.Hacademy = window.Hacademy || {};
+            window.Hacademy.JavaSimpleRunner = function(el, options){
+                if(typeof el === "string"){
+                    el = document.querySelector(el);
+                }
+
+                if(!el) throw "target element not found";
+                this.el = el;
+
+                this.options = Object.assign({}, defaultOptions, options);
+
+                this.ui = {
+                    el:el
+                };
+
+                this.initializeUI();
+            };
+
+            var Runner = window.Hacademy.JavaSimpleRunner;
+            
+            Runner.prototype.initializeUI = function(){
+                var el = this.ui.el;
+                
+                //초기화
+                el.classList.remove("hacademy-runner-pane");
+                el.textContent = "";
+
+                el.classList.add("hacademy-runner-pane");
+
+                //add content
+                var contentDiv = createElement("div", "content-panel");
+
+                //add editor
+                var textareaDiv = createElement("div", "editor-panel");
+
+                var textarea = createElement("textarea");
+                textareaDiv.appendChild(textarea);
+
+                //add button
+                var buttonDiv = createElement("div", "button-panel");
+                var button = createElement("button", "execute-button", "실행(execute)");
+                button.addEventListener("click",()=>{
+                    var code = textarea.value;
+                    if(!code) return false;
+
+                    axios.post("http://localhost/runner/java/simple", {
+                        version:8,
+                        code:code
+                    })
+                    .then(result=>{
+                        this.setResult(result.data);
+                    }).catch(e=>{
+                        this.setError(e.response.data);
+                    });
+                });
+                buttonDiv.appendChild(button);
+
+                contentDiv.appendChild(textareaDiv);
+                contentDiv.appendChild(buttonDiv);
+
+                //add result panel
+                var resultDiv = createElement("div", "result-panel");
+                contentDiv.appendChild(resultDiv);
+
+                el.appendChild(contentDiv);
+
+                this.ui.resultDiv = resultDiv;
+                this.ui.contentDiv = contentDiv;
+                this.ui.buttonDiv = buttonDiv;
+                this.ui.button = button;
+                this.ui.textarea = textarea;
+                this.ui.textareaDiv = textareaDiv;
+            };
+
+            Runner.prototype.loadingStart = function(){
+                this.ui.button.textContent = "실행중...";
+                this.ui.button.disabled = true;
+            };
+            Runner.prototype.loadingFinish = function(){
+                this.ui.button.textContent = "실행(execute)";
+                this.ui.button.disabled = false;
+            };
+
+            Runner.prototype.setResult = function(res){
+                this.ui.resultDiv.classList.remove("success", "error");
+                this.ui.resultDiv.classList.add("success");
+                this.ui.resultDiv.textContent = res;
+            };
+
+            Runner.prototype.setError = function(res){
+                this.ui.resultDiv.classList.remove("success", "error");
+                this.ui.resultDiv.classList.add("error");
+                this.ui.resultDiv.textContent = res;
+            };
+
+            function createElement(tagName, className, innerText){
+                var el = document.createElement(tagName);
+                el.classList.add(className);
+                if(innerText){
+                    el.textContent = innerText;
+                }
+                return el;
+            }
+        })(window);
+    </script>
+    <script>
+        window.addEventListener("load", function(){
+            var ex1 = new Hacademy.JavaSimpleRunner("#runner1");
+        });
+    </script>
+</head>
+<body>
+    <div id="runner1"></div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>java runner demo</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        window.addEventListener("load", function(){
+            document.querySelector("button").addEventListener("click", function(){
+                var code = document.querySelector("textarea").value;
+                if(!code) return;
+
+                axios.post("http://localhost/runner/java/simple", {
+                    version:8,
+                    code:code
+                })
+                .then(result=>{
+                    document.querySelector("pre").textContent = result.data;
+                })
+                .catch(err=>{
+                    //console.log(err.response.data);
+                    document.querySelector("pre").textContent = err.response.data;
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <textarea></textarea>
+    <br>
+    <button>run</button>
+    <hr>
+    <pre></pre>
+</body>
+</html>
