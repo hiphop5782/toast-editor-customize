@@ -7,7 +7,9 @@
         code:"",
         line:10,
         mode:"simple",
-        baseUrl:"http://www.sysout.co.kr"
+        host:"http://www.sysout.co.kr"
+        //host:"http://www.sysout.co.kr:36500"
+        //host:"http://localhost"
     };
 
     window.Hacademy = window.Hacademy || {};
@@ -139,12 +141,14 @@
     };
 
     Runner.prototype.setResult = function(res){
+        if(!res) return;
         this.ui.resultDiv.classList.remove("success", "error");
         this.ui.resultDiv.classList.add("success");
         this.ui.resultDiv.innerHTML = "<pre><code>"+res+"</code></pre>";
     };
 
     Runner.prototype.setError = function(res){
+        if(!res) return;
         this.ui.resultDiv.classList.remove("success", "error");
         this.ui.resultDiv.classList.add("error");
         this.ui.resultDiv.innerHTML = "<pre><code>"+res+"</code></pre>";
@@ -152,8 +156,8 @@
 
     Runner.prototype.getURI = function(){
         switch(this.options.mode){
-            case "simple": return this.options.baseUrl + "/runner/java/simple";
-            case "main": return this.options.baseUrl + "/runner/java/main";
+            case "simple": return this.options.host + "/runner/java/simple";
+            case "main": return this.options.host + "/runner/java/main";
         }
         return null;
     };
