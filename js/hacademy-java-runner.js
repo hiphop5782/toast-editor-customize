@@ -7,7 +7,7 @@
         code:"",
         line:10,
         mode:"simple",
-        host:"http://www.sysout.co.kr"
+        host:"http://www.sysout.co.kr:80"
         //host:"http://www.sysout.co.kr:36500"
         //host:"http://localhost"
     };
@@ -94,6 +94,7 @@
             var code = textarea.value;
             if(!code) return false;
             this.loadingStart();
+            console.log(this.getURI());
             axios.post(this.getURI(), {
                 version:8,
                 code:code
@@ -144,14 +145,14 @@
         if(!res) return;
         this.ui.resultDiv.classList.remove("success", "error");
         this.ui.resultDiv.classList.add("success");
-        this.ui.resultDiv.innerHTML = "<pre><code>"+res+"</code></pre>";
+        this.ui.resultDiv.innerHTML = "<pre><code>"+res.result+"</code></pre>";
     };
 
     Runner.prototype.setError = function(res){
         if(!res) return;
         this.ui.resultDiv.classList.remove("success", "error");
         this.ui.resultDiv.classList.add("error");
-        this.ui.resultDiv.innerHTML = "<pre><code>"+res+"</code></pre>";
+        this.ui.resultDiv.innerHTML = "<pre><code>"+res.result+"</code></pre>";
     };
 
     Runner.prototype.getURI = function(){
