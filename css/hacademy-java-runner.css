@@ -59,4 +59,5 @@
 }
 .hacademy-runner-pane > .content-panel > .result-panel > pre {
     padding:0.5rem;
+    box-shadow: none;
 }
