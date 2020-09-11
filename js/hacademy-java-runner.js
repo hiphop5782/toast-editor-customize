@@ -5,11 +5,12 @@
 
     var defaultOptions = {
         code:"",
-        line:10,
+        line:30,
         mode:"simple",
-        host:"http://www.sysout.co.kr:80"
-        //host:"http://www.sysout.co.kr:36500"
-        //host:"http://localhost"
+        host:"http://www.sysout.co.kr:80",
+        //host:"http://www.sysout.co.kr:36500",
+        //host:"http://localhost",
+        edit:false,
     };
 
     window.Hacademy = window.Hacademy || {};
@@ -48,53 +49,75 @@
         //add content
         var contentDiv = createElement("div", "content-panel");
 
-        //add editor
-        var textareaDiv = createElement("div", "editor-panel");
+        //add editor or code block
+        if(this.options.edit){
+            var textareaDiv = createElement("div", "editor-panel");
 
-        var textarea = createElement("textarea");
-        textarea.addEventListener("keydown", function(e){
-            switch(e.keyCode){
-                case 27://ESC
-                case 144://NUMLOCK
-                case 20://CAPSLOCK
-                case 18://LEFT ALT
-                case 21://RIGHT ALT
-                case 91://LEFT WINDOWS
-                case 92://RIGHT WINDOWS
-                case 93://CONTEXT
-                    e.preventDefault();
-                    return;
-            }
-            
-            if(e.key === "Tab"){
-                var start = this.selectionStart;
-                var end = this.selectionEnd;
+            var textarea = createElement("textarea");
+            textarea.addEventListener("keydown", function(e){
+                switch(e.keyCode){
+                    case 27://ESC
+                    case 144://NUMLOCK
+                    case 20://CAPSLOCK
+                    case 18://LEFT ALT
+                    case 21://RIGHT ALT
+                    case 91://LEFT WINDOWS
+                    case 92://RIGHT WINDOWS
+                    case 93://CONTEXT
+                        e.preventDefault();
+                        return;
+                }
                 
-                var prefix = this.value.substring(0, start);
-                var suffix = this.value.substring(end);
-                this.value = prefix + "\t" + suffix;
+                if(e.key === "Tab"){
+                    var start = this.selectionStart;
+                    var end = this.selectionEnd;
+                    
+                    var prefix = this.value.substring(0, start);
+                    var suffix = this.value.substring(end);
+                    this.value = prefix + "\t" + suffix;
 
-                this.selectionStart = this.selectionEnd = start + 1;
-                e.preventDefault();
+                    this.selectionStart = this.selectionEnd = start + 1;
+                    e.preventDefault();
+                }
+            });
+
+            if(this.options.code){
+                var count = Math.min(this.options.code.split(/\n/).length, this.options.line);
+                textarea.style.minHeight = count+"rem";
             }
-        });
-        if(this.options.code){
-            var count = Math.min(this.options.code.split(/\n/).length, this.options.line);
-            textarea.style.minHeight = count+"rem";
+            textarea.value = this.options.code;
+                            
+            textareaDiv.appendChild(textarea);
+            contentDiv.appendChild(textareaDiv);
+
+            this.ui.textarea = textarea;
+            this.ui.textareaDiv = textareaDiv;
         }
-        textarea.value = this.options.code;
+        else{
+            var codeBlockDiv = createElement("div", "code-panel");
+            var pre = document.createElement("pre");
+            var code = document.createElement("code");
+            code.classList.add("java");
+            code.textContent = this.options.code;
+
+            pre.appendChild(code);
+            codeBlockDiv.appendChild(pre);
+            contentDiv.appendChild(codeBlockDiv);
+
+            this.ui.codeBlockDiv = codeBlockDiv;
+            this.ui.code = code;
+
+            hljs.highlightBlock(code);
+        }
         
-                        
-        textareaDiv.appendChild(textarea);
 
         //add button
         var buttonDiv = createElement("div", "button-panel");
         var button = createElement("button", "execute-button", "실행");
         button.addEventListener("click",()=>{
-            var code = textarea.value;
+            var code = this.options.edit? textarea.value : this.options.code;
             if(!code) return false;
             this.loadingStart();
-            console.log(this.getURI());
             axios.post(this.getURI(), {
                 version:8,
                 code:code
@@ -115,7 +138,7 @@
         });
         buttonDiv.appendChild(clearBtn);
 
-        contentDiv.appendChild(textareaDiv);
+        
         contentDiv.appendChild(buttonDiv);
 
         //add result panel
@@ -128,8 +151,7 @@
         this.ui.contentDiv = contentDiv;
         this.ui.buttonDiv = buttonDiv;
         this.ui.button = button;
-        this.ui.textarea = textarea;
-        this.ui.textareaDiv = textareaDiv;
+        
     };
 
     Runner.prototype.loadingStart = function(){

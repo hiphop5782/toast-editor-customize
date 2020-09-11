@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>java runner demo</title>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.2/build/styles/github-gist.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.2/build/highlight.min.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/hacademy-java-runner.css">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="./js/hacademy-java-runner.js"></script>
@@ -11,9 +13,33 @@
         window.addEventListener("load", function(){
             var ex1 = new Hacademy.JavaRunner("#runner1");
             var ex2 = new Hacademy.JavaRunner("#runner2",{
+                edit:true,
                 code:"System.out.println(\"Hello Java\");"
             });
             var ex3 = new Hacademy.JavaRunner("#runner3");
+
+            var sampleCode = "";
+            sampleCode += "import java.lang.*;\n";
+            sampleCode += "public class Test{\n";
+            sampleCode += "\tpublic static void main(String[] args){\n";
+            sampleCode += "\t\tSystem.out.println(\"Hello world\");\n";
+            sampleCode += "\t\tSystem.out.println(\"Hello world\");\n";
+            sampleCode += "\t\tSystem.out.println(\"Hello world\");\n";
+            sampleCode += "\t\tSystem.out.println(\"Hello world\");\n";
+            sampleCode += "\t\tSystem.out.println(\"Hello world\");\n";
+            sampleCode += "\t\tSystem.out.println(\"Hello world\");\n";
+            sampleCode += "\t\tSystem.out.println(\"Hello world\");\n";
+            sampleCode += "\t\tSystem.out.println(\"Hello world\");\n";
+            sampleCode += "\t\tSystem.out.println(\"Hello world\");\n";
+            sampleCode += "\t\tSystem.out.println(\"Hello world\");\n";
+            sampleCode += "\t\tSystem.out.println(\"Hello world\");\n";
+            sampleCode += "\t}\n";
+            sampleCode += "}\n";
+            var ex4 = new Hacademy.JavaRunner("#runner4", {
+                edit:true,
+                mode:"main",
+                code:sampleCode
+            });
         });
     </script>
 </head>
@@ -21,5 +47,6 @@
     <div id="runner1"></div>
     <div id="runner2"></div>
     <div id="runner3" data-source-code="System.out.println(%22Hello world%22);"></div>
+    <div id="runner4"></div>
 </body>
 </html>

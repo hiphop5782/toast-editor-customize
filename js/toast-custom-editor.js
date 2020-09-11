@@ -47,6 +47,8 @@
         ,typingStrictPlugin//custom typing plugin(strict)
         ,javaSimpleRunner//custom java runner(simple)
         ,javaMainRunner//custom java runner(main)
+        ,javaSimpleIDE//custom java ide runner(simple)
+        ,javaMainIDE//custom java ide runner(main)
     ];
     
     const customHTMLRenderer = {

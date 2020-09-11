@@ -10,6 +10,10 @@
     display:block;
     clear:both;
 }
+.hacademy-runner-pane > .content-panel > .code-panel {
+    margin-bottom: 5px;
+    border:1px solid gray;    
+}
 .hacademy-runner-pane > .content-panel > .editor-panel {
     width:100%;
 }
