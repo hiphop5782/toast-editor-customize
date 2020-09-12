@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>textarea syntax highlighting</title>
+
+    <!-- syntax highlight plugin need highlightjs -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.2/build/styles/github-gist.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.2/build/highlight.min.js"></script>
+    <style>
+        .textarea-highlighter{
+            position: relative;
+        }
+        .textarea-highlighter > textarea{
+            resize:none;
+            color:transparent;
+            background-color:transparent;
+            z-index:2;
+            padding:0.5rem;
+            caret-color: black;
+        }   
+        .textarea-highlighter > textarea, 
+        .textarea-highlighter > pre{
+            display: block;
+            width:500px;
+            height:300px;
+            overflow: hidden;
+            font-size: 1rem;
+            margin: 0;
+        }
+        .textarea-highlighter > pre {
+            position:absolute;
+            top:0;
+            left:0;
+            padding:0.5rem;
+            white-space: pre-wrap;  
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;  
+            white-space: -o-pre-wrap;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            z-index: -1;
+        }
+        .textarea-highlighter > pre > code {
+            margin:0;
+            padding:0;
+        }
+    </style>
+    <script>
+        window.addEventListener("load", function(){
+            highlightSyntax();
+            var event = ["keyup", "keypress", "keydown", "input", "change", "paste"];
+            for(var i=0; i<event.length; i++){
+                document.querySelector(".textarea-highlighter > textarea").addEventListener(event[i], function(){
+                    highlightSyntax();
+                });
+            }
+            document.querySelector(".textarea-highlighter > textarea").addEventListener("copy", function(e){
+                // e.preventDefault();
+                // var start = this.selectionStart;
+                // var end = this.selectionEnd;
+                // if(!this.value || start >= end) return;
+
+                // var selection = this.value.substring(start, end);
+
+                // var div = document.createElement("div");
+                // div.setAttribute("id", "code-block-"+Math.floor(Math.random() * 1000000000));
+                
+                // var link = document.createElement("link");
+                // link.setAttribute("rel", "stylesheet");
+                // link.setAttribute("type", "text/css");
+                // link.setAttribute("href", "//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.2/build/styles/github-gist.min.css");
+
+                // var script = document.createElement("script");
+                // script.setAttribute("src", "//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.2/build/highlight.min.js");
+                
+                // div.appendChild(link);
+                // div.appendChild(script);
+                
+                // var pre = document.createElement("pre");
+                // var code = document.createElement("code");
+                // code.textContent = selection;
+                // pre.appendChild(code);
+                // div.appendChild(pre);
+                // hljs.highlightBlock(code);
+
+                // var executeScript = document.createElement("script");
+                // executeScript.textContent = "hljs.highlightBlock(document.querySelector(\"div[id="+div.getAttribute("id")+"]\"));";
+                
+                // copyToClipboard(div.outerHTML);
+            });
+        });
+
+
+        function highlightSyntax(){
+        
+            var editor = document.querySelector(".textarea-highlighter > textarea");
+            var value = decodeURIComponent(editor.value);
+
+            var code = document.querySelector(".textarea-highlighter > pre > code");
+            if(!code.classList.contains("html")){
+                code.classList.add("html");
+            }
+            code.textContent = value;
+
+            hljs.highlightBlock(code);
+        }
+
+        function copyToClipboard(text){
+            var el = document.createElement("textarea");
+            document.body.appendChild(el);
+            el.value = text;
+            el.select();
+            document.execCommand("copy");
+            document.body.removeChild(el);       
+        }
+    </script>
+</head>
+<body>
+    
+    <div class="textarea-highlighter">
+        <textarea>&lt;div class="Editable Textarea"&gt;
+            &lt;h1&gt;This is a fully editable textarea which auto highlights syntax.&lt;/h1&gt;
+            &lt;p&gt;Type or paste any code in here...&lt;/p&gt;
+          &lt;div&gt;
+          
+          &lt;?php
+            var simple = "coding";
+          ?&gt;
+          
+          &lt;script&gt;
+            with = "Tab or double space functionality";
+          &lt;/script&gt;</textarea>
+        <pre><code></code></pre>
+    </div>
+
+</body>
+</html>

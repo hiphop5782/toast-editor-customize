@@ -21,6 +21,12 @@
     padding:0.5rem;
     min-height: 5rem;
 }
+.hacademy-runner-pane >  .content-panel > .editor-panel > pre {
+
+}
+.hacademy-runner-pane >  .content-panel > .editor-panel > pre > code {
+    
+}
 .hacademy-runner-pane > .content-panel > .button-panel {
     text-align:right;
 }
@@ -30,7 +36,6 @@
     min-width: 100px;
     margin-left: 10px;
     color:black;
-    outline: none;
 }
 .hacademy-runner-pane > .content-panel > .button-panel > .execute-button{
     background-color: white;

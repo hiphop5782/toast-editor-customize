@@ -7,8 +7,8 @@
         code:"",
         line:10,
         mode:"simple",
-        host:"http://www.sysout.co.kr"
-        //host:"http://www.sysout.co.kr:36500"
+        //host:"http://www.sysout.co.kr"
+        host:"http://www.sysout.co.kr:36500"
         //host:"http://localhost"
     };
 
