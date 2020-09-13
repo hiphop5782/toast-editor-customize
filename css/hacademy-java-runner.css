@@ -61,7 +61,7 @@
 .hacademy-runner-pane >  .content-panel > .editor-panel > textarea,
 .hacademy-runner-pane >  .content-panel > .editor-panel > pre,
 .hacademy-runner-pane >  .content-panel > .editor-panel > pre > code {
-    font-family: Verdana !important;
+    font-family: Noto Sans !important;
     font-size: 1rem !important;
     letter-spacing: 0.3px;
     word-spacing: 0.5px;
