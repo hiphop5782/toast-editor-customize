@@ -13,7 +13,7 @@ function javaSimpleRunner(){
     function render(wrapperId, sourceCode){
 		var el = document.getElementById(wrapperId);
 		var app = new Hacademy.JavaRunner(el, {
-            code:sourceCode,
+            code:encodeURIComponent(sourceCode),
             mode:"simple"
 		});
 	}
@@ -29,7 +29,7 @@ function javaMainRunner(){
     function render(wrapperId, sourceCode){
 		var el = document.getElementById(wrapperId);
 		var app = new Hacademy.JavaRunner(el, {
-            code:sourceCode,
+            code:encodeURIComponent(sourceCode),
             mode:"main"
 		});
 	}
@@ -45,7 +45,7 @@ function javaSimpleIDE(){
     function render(wrapperId, sourceCode){
 		var el = document.getElementById(wrapperId);
 		var app = new Hacademy.JavaRunner(el, {
-            code:sourceCode,
+            code:encodeURIComponent(sourceCode),
             edit:true,
             mode:"simple"
 		});
@@ -62,7 +62,7 @@ function javaMainIDE(){
     function render(wrapperId, sourceCode){
 		var el = document.getElementById(wrapperId);
 		var app = new Hacademy.JavaRunner(el, {
-            code:sourceCode,
+            code:encodeURIComponent(sourceCode),
             edit:true,
             mode:"main"
 		});

@@ -18,6 +18,7 @@
 .hacademy-runner-pane > .content-panel > .editor-panel {
     position: relative;
     width:100%;
+    overflow: hidden;
 }
 .hacademy-runner-pane >  .content-panel > .editor-panel > textarea {
     width:100%;
@@ -32,6 +33,11 @@
     background-color: transparent;
     caret-color: black;
     z-index: 2;
+    letter-spacing: 0.3px;;
+}
+.hacademy-runner-pane >  .content-panel > .editor-panel > textarea::selection{
+    color: transparent;
+    background-color:#DDDDDD;
 }
 .hacademy-runner-pane >  .content-panel > .editor-panel > pre {
     margin: 0;
@@ -47,6 +53,8 @@
     overflow-wrap: break-word;
     word-wrap: break-word;
     z-index: -1;
+    width:100%;
+    box-shadow: none;
 }
 .hacademy-runner-pane >  .content-panel > .editor-panel > pre > code {
     margin: 0;

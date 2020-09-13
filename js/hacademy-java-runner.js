@@ -94,7 +94,7 @@
         //key listener for editor function
         textarea.addEventListener("keydown", TextareaKeyDownHandler);
         textarea.addEventListener("keyup", TextareaKeyUpHandler)
-
+        
         //key listener for syntax highlight
         var event = ["keyup", "keypress", "keydown", "input", "change", "paste"];
         for(var i=0; i<event.length; i++){
@@ -102,6 +102,12 @@
                 SyntaxHighlight.call(this, e);
             });
         }
+
+        //scroll listener for sync scroll
+        textarea.addEventListener("scroll", (e)=>{
+            console.log(e.target.scrollTop);
+            pre.style.top = -e.target.scrollTop + "px";
+        });
         
         if(this.options.code){
             var count = Math.min(this.options.code.split(/\n/).length, this.options.line);
