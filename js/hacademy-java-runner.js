@@ -105,7 +105,6 @@
 
         //scroll listener for sync scroll
         textarea.addEventListener("scroll", (e)=>{
-            console.log(e.target.scrollTop);
             pre.style.top = -e.target.scrollTop + "px";
         });
         
