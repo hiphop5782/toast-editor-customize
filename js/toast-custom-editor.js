@@ -240,6 +240,24 @@
     		element = document.querySelector(element);
     	return !(!element.childNodes[0] || !element.childNodes[0].classList.contains("tui-editor-defaultUI"));
     };
+	
+    util.createOrRefreshEditor = function (selector, callback) {
+    	var elements = document.querySelectorAll(selector);
+        if (!elements.length) return;
+
+        util.editors = [];
+        
+        for (var i = 0; i < elements.length; i++) {
+        	var idx = elements[i].id || i;
+        	
+		var editor = util.createUnitEditor(elements[i]);
+		util.editors[idx] = editor;
+        	
+        	if(callback && typeof callback === "function")
+        		callback(editor);
+        }
+        clearLocalStorage(w, location.origin);
+    };
     
     util.createOrReplaceEditor = function (selector, callback) {
     	var elements = document.querySelectorAll(selector);
