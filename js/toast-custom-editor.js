@@ -245,13 +245,15 @@
     	var elements = document.querySelectorAll(selector);
         if (!elements.length) return;
 
-        util.editors = [];
+        util.editors = util.editors || [];
         
         for (var i = 0; i < elements.length; i++) {
         	var idx = elements[i].id || i;
         	
-		var editor = util.createUnitEditor(elements[i]);
-		util.editors[idx] = editor;
+		if(!this.isEditor(elements[i])){
+			var editor = util.createUnitEditor(elements[i]);
+			util.editors[idx] = editor;
+		}
         	
         	if(callback && typeof callback === "function")
         		callback(editor);
