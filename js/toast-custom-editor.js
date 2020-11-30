@@ -270,7 +270,7 @@
     	var elements = document.querySelectorAll(selector);
         if (!elements.length) return;
 
-        util.editors = [];
+        util.editors = util.editors || [];
         
         for (var i = 0; i < elements.length; i++) {
         	var idx = elements[i].id || i;
