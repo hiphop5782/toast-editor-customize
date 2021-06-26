@@ -300,7 +300,7 @@
             cloneOptions.el = elements[i];
 
             //내용을 불러와서 설정
-            var content = elements[i].dataset.content || "";
+            var content = elements[i].dataset.content || elements[i].textContent.trim() || "";
             delete elements[i].dataset.content;
             elements[i].textContent = "";
             cloneOptions.initialValue = content;
