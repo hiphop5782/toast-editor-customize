@@ -3,18 +3,27 @@
     - create tree path from unorder list markdown syntax
 */
 function treePathPlugin(){
-   toastui.Editor.codeBlockManager.setReplacer("tree", function(text){
-        const wrapperId = 'tree' + Math.random().toString(36).substr(2, 10);
-
-        setTimeout(renderTreePath.bind(null, wrapperId, text), 0);
-
-        return '<div id="'+ wrapperId + '"></div>';
-   });
-
-   function renderTreePath(wrapperId, text){
-        const el = document.querySelector('#' + wrapperId);
-        el.appendChild(createTreePath(text));
-   }
+    const toHTMLRenderers = { 
+        tree(node){
+            const body = createTreePath(node.literal);
+            return [
+                {type:'openTag', tagName:'div', outerNewLine:true},
+                {type:'html', content:body.outerHTML},
+                {type:'closeTag', tagName:'div', outerNewLine:true},
+            ];
+        },
+    };
+    return {toHTMLRenderers};
+//    구버전 코드
+//    toastui.Editor.codeBlockManager.setReplacer("tree", function(text){
+//         const wrapperId = 'tree' + Math.random().toString(36).substr(2, 10);
+//         setTimeout(renderTreePath.bind(null, wrapperId, text), 0);
+//         return '<div id="'+ wrapperId + '"></div>';
+//    });
+//    function renderTreePath(wrapperId, text){
+//         const el = document.querySelector('#' + wrapperId);
+//         el.appendChild(createTreePath(text));
+//    }
 
    function createTreePath(text, hasRootNode){
         if(!text.trim()) "content not found";

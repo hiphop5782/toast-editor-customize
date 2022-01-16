@@ -63,7 +63,7 @@
     width:0.5rem;
     top:0;
     bottom:0;
-    border-left:1px solid #333;
+    /* border-left:1px solid #333; */
     margin:0;
 }
 .tree li:last-child > div::after{
@@ -75,4 +75,9 @@
     background-color:transparent;
     border-radius: 0;
     height:auto;
+}
+
+/* toastui editor 스타일과 충돌되는 부분 제거 */
+.tree li::before {
+    background-color: transparent !important;
 }

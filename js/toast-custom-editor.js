@@ -7,19 +7,8 @@
 
     var util = w.Hacademy.TuiEditor;
 
-    util.clone = function(obj) {
-        if (obj === null || typeof (obj) !== 'object')
-            return obj;
-
-        var copy = obj.constructor();
-
-        for (var attr in obj) {
-            if (obj.hasOwnProperty(attr)) {
-                copy[attr] = util.clone(obj[attr]);
-            }
-        }
-
-        return copy;
+    util.clone = function clone(obj) {
+        return Object.assign({}, obj);
     }
 
     const {chart, tableMergedCell, uml, colorSyntax, codeSyntaxHighlight} = toastui.Editor.plugin;
@@ -30,25 +19,43 @@
         maxHeight: 300
     };
 
+    function latexPlugin() {
+        const toHTMLRenderers = {
+          latex(node) {
+            const generator = new latexjs.HtmlGenerator({ hyphenate: false });
+            const { body } = latexjs.parse(node.literal, { generator }).htmlDocument();
+
+            return [
+              { type: 'openTag', tagName: 'div', outerNewLine: true },
+              { type: 'html', content: body.innerHTML },
+              { type: 'closeTag', tagName: 'div', outerNewLine: true }
+            ];
+          },
+        }
+
+        return { toHTMLRenderers }
+      }
+
+
     const pluginList = [
         [chart, chartOptions]//chart plugin
         ,uml//uml plugin
-        ,codeSyntaxHighlight//code highlight plugin
+        ,[codeSyntaxHighlight, {highlighter: Prism}]//code highlight plugin
         ,tableMergedCell//table cell plugin
         ,colorSyntax//color syntax plugin
         ,treePathPlugin//custom tree path plugin
         ,katexPlugin//custom katex plugin
         ,youtubePlugin//custom youtube plugin
-        ,zipViewerPlugin//custom zip-viewer plugin
-        ,htmlRendererPlugin//custom html-renderer plugin(result base)
-        ,htmlRendererSourcePlugin//custom html-renderer plugin(source base)
-        ,htmlRendererSplitPlugin//custom html-renderer plugin(split base)
+        //,zipViewerPlugin//custom zip-viewer plugin
+        //,htmlRendererPlugin//custom html-renderer plugin(result base)
+        //,htmlRendererSourcePlugin//custom html-renderer plugin(source base)
+        //,htmlRendererSplitPlugin//custom html-renderer plugin(split base)
         ,typingPlugin//custom typing plugin(non-strict)
         ,typingStrictPlugin//custom typing plugin(strict)
-        ,javaSimpleRunner//custom java runner(simple)
-        ,javaMainRunner//custom java runner(main)
-        ,javaSimpleIDE//custom java ide runner(simple)
-        ,javaMainIDE//custom java ide runner(main)
+        //,javaSimpleRunner//custom java runner(simple)
+        //,javaMainRunner//custom java runner(main)
+        //,javaSimpleIDE//custom java ide runner(simple)
+        //,javaMainIDE//custom java ide runner(main)
     ];
     
     const customHTMLRenderer = {
@@ -60,7 +67,16 @@
                 tagName: 'h'+node.level,
                 classNames:['header-anchor']
             }
-        }
+        },
+        htmlBlock: {
+            iframe(node) {
+              return [
+                { type: 'openTag', tagName: 'iframe', outerNewLine: true, attributes: node.attrs },
+                { type: 'html', content: node.childrenHTML },
+                { type: 'closeTag', tagName: 'iframe', outerNewLine: true },
+              ];
+            },
+          },
     };
 
     //editor 생성 함수
@@ -87,16 +103,11 @@
 
         //툴바 스타일 설정
         toolbarItems: [
-            'heading','bold','italic',
-            'divider',
-            'hr','quote',
-            'divider',
-            'ul','ol','task','indent','outdent',
-            'divider',
-            'table','image','link',
-            'divider',
-            'code','codeblock',
-            'divider'
+            ['heading','bold','italic'],
+            ['hr','quote'],
+            ['ul','ol','task','indent','outdent'],
+            ['table','image','link'],
+            ['code','codeblock']
         ],
 
         //플러그인 설정

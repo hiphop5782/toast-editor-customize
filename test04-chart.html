@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/3.0.2/toastui-editor.min.css" />
+</head>
+
+<body>
+    <div class="toast-custom-editor">$$chart
+,category1,category2
+Jan,21,23
+Feb,31,17
+
+type: column
+title: Monthly Revenue
+x.title: Amount
+y.title: Month
+y.min: 1
+y.max: 40
+y.suffix: $
+$$</div>
+    <script src="https://uicdn.toast.com/editor/3.0.2/toastui-editor-all.min.js"></script>
+    <script src="https://uicdn.toast.com/chart/latest/toastui-chart.min.js"></script>
+    <script src="https://uicdn.toast.com/editor-plugin-chart/3.0.0/toastui-editor-plugin-chart.min.js"></script>
+    <script>
+        const {Editor} = toastui;
+        const {chart} = Editor.plugin;
+
+        const chartOptions = {
+            minWidth: 100,
+            maxWidth: 600,
+            minHeight: 100,
+            maxHeight: 300
+        };
+
+        const target = document.querySelector('.toast-custom-editor');
+        const content = target.innerHTML;
+        target.innerHTML = "";
+
+        const editor = Editor.factory({
+            el: target,
+            previewStyle: 'vertical',
+            height: '500px',
+            initialValue:content,
+            plugins: [
+                [chart, chartOptions]
+            ]
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,5 +1,4 @@
 (function (w) {
-
     if (!w) throw "Window is not defined";
     if (!toastui || !toastui.Editor) throw "Toast Dependency Not Defined";
 
@@ -9,21 +8,12 @@
     var util = w.Hacademy.TuiEditor;
 
     util.clone = function clone(obj) {
-        if (obj === null || typeof (obj) !== 'object')
-            return obj;
-
-        var copy = obj.constructor();
-
-        for (var attr in obj) {
-            if (obj.hasOwnProperty(attr)) {
-                copy[attr] = clone(obj[attr]);
-            }
-        }
-
-        return copy;
+        return Object.assign({}, obj);
     }
 
-    const {chart, tableMergedCell, uml, colorSyntax, codeSyntaxHighlight} = toastui.Editor.plugin;
+    const {Editor} = toastui;
+    
+    const {chart, tableMergedCell, uml, colorSyntax, codeSyntaxHighlight} = Editor.plugin;
     const chartOptions = {
         minWidth: 100,
         maxWidth: 600,
@@ -55,22 +45,17 @@
 
         //툴바 스타일 설정
         toolbarItems: [
-            'heading','bold','italic',
-            'divider',
-            'hr','quote',
-            'divider',
-            'ul','ol','task','indent','outdent',
-            'divider',
-            'table','image','link',
-            'divider',
-            'code','codeblock',
-            'divider'
+            ['heading','bold','italic'],
+            ['hr','quote'],
+            ['ul','ol','task','indent','outdent'],
+            ['table','image','link'],
+            ['code','codeblock']
         ],
 
         plugins: [
             [chart, chartOptions]//chart plugin
             ,uml//uml plugin
-            ,codeSyntaxHighlight//code highlight plugin
+            ,[codeSyntaxHighlight, { highlighter: Prism }]//code highlight plugin
             ,tableMergedCell//table cell plugin
             ,colorSyntax//color syntax plugin
         ],
@@ -107,7 +92,10 @@
                 cloneOptions.initialEditType = "wysiwyg";
 
             //create editor and push
-            util.editors[idx] = new toastui.Editor(cloneOptions);
+            //util.editors[idx] = new Editor(cloneOptions);
+            Editor.factory(cloneOptions);
+            util.editors[idx] = idx;
+            console.log(util);
         }
     };
 

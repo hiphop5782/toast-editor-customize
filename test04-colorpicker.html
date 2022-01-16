@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/3.0.2/toastui-editor.min.css" />
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor-plugin-color-syntax/3.0.2/toastui-editor-plugin-color-syntax.min.css"/>
+</head>
+
+<body>
+    <div class="toast-custom-editor"></div>
+    <script src="https://uicdn.toast.com/editor/3.0.2/toastui-editor-all.min.js"></script>
+    <script src="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.js"></script>
+    <script src="https://uicdn.toast.com/editor-plugin-color-syntax/3.0.0/toastui-editor-plugin-color-syntax.min.js"></script>
+    <script>
+        const {Editor} = toastui;
+        const {colorSyntax} = Editor.plugin;
+
+        const target = document.querySelector('.toast-custom-editor');
+        const content = target.innerHTML;
+        target.innerHTML = "";
+
+        const editor = Editor.factory({
+            el: target,
+            previewStyle: 'vertical',
+            height: '500px',
+            initialValue:content,
+            plugins: [
+                colorSyntax
+            ]
+        });
+
+    </script>
+</body>
+
+</html>

@@ -6,15 +6,15 @@
     <!-- bootstrap font-awesome -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/3.0.2/toastui-editor.min.css" />
     
-    <!-- toastui colorpicker popup stype -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tui-color-picker@2.2.6/dist/tui-color-picker.min.css">
+    <!-- color picker dependencies -->
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor-plugin-color-syntax/3.0.2/toastui-editor-plugin-color-syntax.min.css"/>
 
-    <!-- syntax highlight plugin need highlightjs -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.2/build/styles/github-gist.min.css">
-    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.2/build/highlight.min.js"></script>
+    <!-- code syntax highlighter dependencies-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" />
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.css" />
     
     <!-- custom editor style -->
     <link rel="stylesheet" href="./css/toastui-editor-custom.css">
@@ -60,18 +60,26 @@
     <!-- axios -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     
-    <!-- Editor dependencies -->
-    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-    
-    <!-- Editor plugins dependencies-->
-    <script src="https://uicdn.toast.com/editor-plugin-table-merged-cell/latest/toastui-editor-plugin-table-merged-cell.min.js"></script>
-    <script src="https://uicdn.toast.com/editor-plugin-chart/latest/toastui-editor-plugin-chart.js"></script>
-    <script src="https://uicdn.toast.com/editor-plugin-uml/latest/toastui-editor-plugin-uml.js"></script>
-    <script src="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.js"></script>
-    
-    <!-- syntax highlight plugin (highlightjs 필요) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
-    <script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.js"></script>
+    <!-- Editor dependencies-->
+    <script src="https://uicdn.toast.com/editor/3.0.2/toastui-editor-all.js"></script>
+
+    <!-- table merge cell dependencies-->
+    <script src="https://uicdn.toast.com/editor-plugin-table-merged-cell/3.0.0/toastui-editor-plugin-table-merged-cell.js"></script>
+
+    <!-- char dependencies -->
+    <script src="https://uicdn.toast.com/chart/latest/toastui-chart.min.js"></script>
+    <script src="https://uicdn.toast.com/editor-plugin-chart/3.0.0/toastui-editor-plugin-chart.min.js"></script>
+
+    <!-- color picker dependencies -->
+    <script src="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.js"></script>
+    <script src="https://uicdn.toast.com/editor-plugin-color-syntax/3.0.0/toastui-editor-plugin-color-syntax.min.js"></script>
+
+    <script src="https://uicdn.toast.com/editor-plugin-uml/3.0.0/toastui-editor-plugin-uml.js"></script>
+
+    <!-- code syntax highlighter dependencies-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-clojure.min.js"></script>
+    <script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/3.0.0/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
     
     <!-- custom tree path plugin -->
     <script src="./js/toast-custom-tree-plugin.js"></script>
