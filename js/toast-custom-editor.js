@@ -11,7 +11,13 @@
         return Object.assign({}, obj);
     }
 
-    const {chart, tableMergedCell, uml, colorSyntax, codeSyntaxHighlight} = toastui.Editor.plugin;
+    const {
+        chart,
+        tableMergedCell,
+        uml,
+        colorSyntax,
+        codeSyntaxHighlight
+    } = toastui.Editor.plugin;
     const chartOptions = {
         minWidth: 100,
         maxWidth: 600,
@@ -21,62 +27,93 @@
 
     function latexPlugin() {
         const toHTMLRenderers = {
-          latex(node) {
-            const generator = new latexjs.HtmlGenerator({ hyphenate: false });
-            const { body } = latexjs.parse(node.literal, { generator }).htmlDocument();
+            latex(node) {
+                const generator = new latexjs.HtmlGenerator({
+                    hyphenate: false
+                });
+                const {
+                    body
+                } = latexjs.parse(node.literal, {
+                    generator
+                }).htmlDocument();
 
-            return [
-              { type: 'openTag', tagName: 'div', outerNewLine: true },
-              { type: 'html', content: body.innerHTML },
-              { type: 'closeTag', tagName: 'div', outerNewLine: true }
-            ];
-          },
+                return [{
+                        type: 'openTag',
+                        tagName: 'div',
+                        outerNewLine: true
+                    },
+                    {
+                        type: 'html',
+                        content: body.innerHTML
+                    },
+                    {
+                        type: 'closeTag',
+                        tagName: 'div',
+                        outerNewLine: true
+                    }
+                ];
+            },
         }
 
-        return { toHTMLRenderers }
-      }
+        return {
+            toHTMLRenderers
+        }
+    }
 
 
     const pluginList = [
-        [chart, chartOptions]//chart plugin
-        ,uml//uml plugin
-        ,[codeSyntaxHighlight, {highlighter: Prism}]//code highlight plugin
-        ,tableMergedCell//table cell plugin
-        ,colorSyntax//color syntax plugin
-        ,treePathPlugin//custom tree path plugin
-        ,katexPlugin//custom katex plugin
-        ,youtubePlugin//custom youtube plugin
+        [chart, chartOptions] //chart plugin
+        , uml //uml plugin
+        , [codeSyntaxHighlight, {
+            highlighter: Prism
+        }] //code highlight plugin
+        , tableMergedCell //table cell plugin
+        , colorSyntax //color syntax plugin
+        , treePathPlugin //custom tree path plugin
+        , katexPlugin //custom katex plugin
+        , youtubePlugin //custom youtube plugin
         //,zipViewerPlugin//custom zip-viewer plugin
-        //,htmlRendererPlugin//custom html-renderer plugin(result base)
+        ,htmlRendererPlugin//custom html-renderer plugin(result base)
         //,htmlRendererSourcePlugin//custom html-renderer plugin(source base)
         //,htmlRendererSplitPlugin//custom html-renderer plugin(split base)
-        ,typingPlugin//custom typing plugin(non-strict)
-        ,typingStrictPlugin//custom typing plugin(strict)
+        , typingPlugin //custom typing plugin(non-strict)
+        , typingStrictPlugin //custom typing plugin(strict)
         //,javaSimpleRunner//custom java runner(simple)
         //,javaMainRunner//custom java runner(main)
         //,javaSimpleIDE//custom java ide runner(simple)
         //,javaMainIDE//custom java ide runner(main)
     ];
-    
+
     const customHTMLRenderer = {
         //header anchor 추가
-        heading(node, context){
-            if(context.entering) util.sequence ++;
+        heading(node, context) {
+            if (context.entering) util.sequence++;
             return {
                 type: context.entering ? 'openTag' : 'closeTag',
-                tagName: 'h'+node.level,
-                classNames:['header-anchor']
+                tagName: 'h' + node.level,
+                classNames: ['header-anchor']
             }
         },
         htmlBlock: {
             iframe(node) {
-              return [
-                { type: 'openTag', tagName: 'iframe', outerNewLine: true, attributes: node.attrs },
-                { type: 'html', content: node.childrenHTML },
-                { type: 'closeTag', tagName: 'iframe', outerNewLine: true },
-              ];
+                return [{
+                        type: 'openTag',
+                        tagName: 'iframe',
+                        outerNewLine: true,
+                        attributes: node.attrs
+                    },
+                    {
+                        type: 'html',
+                        content: node.childrenHTML
+                    },
+                    {
+                        type: 'closeTag',
+                        tagName: 'iframe',
+                        outerNewLine: true
+                    },
+                ];
             },
-          },
+        },
     };
 
     //editor 생성 함수
@@ -103,40 +140,42 @@
 
         //툴바 스타일 설정
         toolbarItems: [
-            ['heading','bold','italic'],
-            ['hr','quote'],
-            ['ul','ol','task','indent','outdent'],
-            ['table','image','link'],
-            ['code','codeblock']
+            ['heading', 'bold', 'italic'],
+            ['hr', 'quote'],
+            ['ul', 'ol', 'task', 'indent', 'outdent'],
+            ['table', 'image', 'link'],
+            ['code', 'codeblock']
         ],
 
         //플러그인 설정
         plugins: pluginList,
-        
+
         //실시간 미리보기 설정
-        contenteditable:false,
-        
+        contenteditable: false,
+
         //훅 설정
-        hooks:{
+        hooks: {
             //파일 업로드 설정(axios 필요)
-            'addImageBlobHook':function(blob, callback){
+            'addImageBlobHook': function (blob, callback) {
                 var data = new FormData();
                 data.append("upload", blob);
-                
+
                 axios.post("http://www.sysout.co.kr/file/upload-ckeditor", data, {
-                    headers:{"Content-Type":"multipart/form-data"}
-                })
-                .then(result=>{
-                    callback(result.data.url);
-                })
-                .catch(err=>{
-                    alert("업로드 실패");
-                });
+                        headers: {
+                            "Content-Type": "multipart/form-data"
+                        }
+                    })
+                    .then(result => {
+                        callback(result.data.url);
+                    })
+                    .catch(err => {
+                        alert("업로드 실패");
+                    });
             }
         },
-        
+
         //custom render option 
-        customHTMLRenderer:customHTMLRenderer    
+        customHTMLRenderer: customHTMLRenderer
     };
 
     var defaultViewerOptions = {
@@ -147,13 +186,13 @@
         el: null,
 
         //뷰어 설정
-        viewer:true,
+        viewer: true,
 
         //플러그인 설정
         plugins: pluginList,
-        
+
         //custom render option 
-        customHTMLRenderer:customHTMLRenderer    
+        customHTMLRenderer: customHTMLRenderer
     };
 
     util.createEditor = function (selector, callback) {
@@ -166,16 +205,16 @@
             var idx = elements[i].id || i;
 
             var editor = util.createUnitEditor(elements[i]);
-            
+
             util.editors[idx] = editor;
-            if(callback && typeof callback === "function")
-            	callback(editor);
+            if (callback && typeof callback === "function")
+                callback(editor);
         }
         clearLocalStorage(w, location.origin);
     };
-    
-    util.createUnitEditor = function(element){
-    	//Option 복제 및 설정
+
+    util.createUnitEditor = function (element) {
+        //Option 복제 및 설정
         var cloneOptions = util.clone(defaultEditorOptions);
 
         //대상 설정
@@ -183,10 +222,10 @@
 
         //내용을 불러와서 설정
         var content = element.dataset.content || "";
-        if(content){
-        	element.innerHTML = "";
-        	delete element.dataset.content;
-        	cloneOptions.initialValue = content;
+        if (content) {
+            element.innerHTML = "";
+            delete element.dataset.content;
+            cloneOptions.initialValue = content;
         }
 
         //classList 점검 및 설정
@@ -197,100 +236,100 @@
         if (classList.contains("vertical-editor"))
             cloneOptions.previewStyle = "vertical";
         if (classList.contains("wysiwyg-editor"))
-            cloneOptions.initialEditType = "wysiwyg";     
-        
+            cloneOptions.initialEditType = "wysiwyg";
+
         //height setting
         cloneOptions.height = element.dataset.height || cloneOptions.height;
 
         //create editor and push
         var editor = toastui.Editor.factory(cloneOptions);
-        
+
         //전송시 이름 설정
         var input = document.createElement("input");
         input.setAttribute("type", "hidden");
         var name = element.dataset.name || 'content';
         input.setAttribute("name", name);
         element.appendChild(input);
-        
-        editor.on("change", e=>{
+
+        editor.on("change", e => {
             input.value = editor.getMarkdown();
         });
-        
+
         //blur 이벤트 발생 시 localStorage에 저장
         // - 모든 에디터에 하지 말고 .record-editor에만 설정
-        if(classList.contains("record-editor")){
-            editor.on("blur", e=>{
+        if (classList.contains("record-editor")) {
+            editor.on("blur", e => {
                 localStorage.setItem(location.href, editor.getMarkdown());
             });
         }
-        
+
         //localStorage에 idx에 대한 이력이 존재하고, 입력값이 없을 때 confirm 띄우기
         var record = localStorage.getItem(location.href);
-        if(classList.contains("record-editor") && record && !editor.getMarkdown()){
-            if(confirm("이전 내역을 이어서 작성하시겠습니까?")){
+        if (classList.contains("record-editor") && record && !editor.getMarkdown()) {
+            if (confirm("이전 내역을 이어서 작성하시겠습니까?")) {
                 editor.setMarkdown(record);
             }
             localStorage.removeItem(location.href);
         }
-        
+
         return editor;
     }
-    
+
     //clear local storage
-    function clearLocalStorage(window, origin){
-    	for(var i=0; i < window.localStorage.length; i++){
-    		var key = window.localStorage.key(i);
-    		if(key.startsWith(origin)){
-    			window.localStorage.removeItem(key);
-    		}
-    	}
+    function clearLocalStorage(window, origin) {
+        for (var i = 0; i < window.localStorage.length; i++) {
+            var key = window.localStorage.key(i);
+            if (key.startsWith(origin)) {
+                window.localStorage.removeItem(key);
+            }
+        }
     }
-    
-    util.isEditor = function(element){
-    	if(typeof element === "string")
-    		element = document.querySelector(element);
-    	return !(!element.childNodes[0] || !element.childNodes[0].classList.contains("tui-editor-defaultUI"));
+
+    util.isEditor = function (element) {
+        if (typeof element === "string")
+            element = document.querySelector(element);
+        return !(!element.childNodes[0] || !element.childNodes[0].classList.contains("tui-editor-defaultUI"));
     };
-	
+
     util.createOrClearEditor = function (selector, callback) {
-    	var elements = document.querySelectorAll(selector);
+        var elements = document.querySelectorAll(selector);
         if (!elements.length) return;
 
         util.editors = util.editors || [];
-	    
-	for (var i = 0; i < util.editors.length; i++){
-		util.editors[i].setMarkdown("");	
-	}
-        
-        for (var i = 0; i < elements.length; i++) {
-        	var idx = elements[i].id || i;
-        	
-		if(!this.isEditor(elements[i])){
-			var editor = util.createUnitEditor(elements[i]);
-			util.editors[idx] = editor;
-		}
-        	
-        	if(callback && typeof callback === "function")
-        		callback(editor);
+
+        for (var i = 0; i < util.editors.length; i++) {
+            util.editors[i].setMarkdown("");
         }
-	    
+
+        for (var i = 0; i < elements.length; i++) {
+            var idx = elements[i].id || i;
+
+            if (!this.isEditor(elements[i])) {
+                var editor = util.createUnitEditor(elements[i]);
+                util.editors[idx] = editor;
+            }
+
+            if (callback && typeof callback === "function")
+                callback(editor);
+        }
+
         clearLocalStorage(w, location.origin);
     };
-    
+
     util.createOrReplaceEditor = function (selector, callback) {
-    	var elements = document.querySelectorAll(selector);
+        var elements = document.querySelectorAll(selector);
         if (!elements.length) return;
 
         util.editors = util.editors || [];
-        
+
         for (var i = 0; i < elements.length; i++) {
-        	var idx = elements[i].id || i;
-        	if(!this.isEditor(elements[i])){
-        		var editor = util.createUnitEditor(elements[i]);
-        		util.editors[idx] = editor;
-        	}
-        	if(callback && typeof callback === "function")
-        		callback(editor);
+            var idx = elements[i].id || i;
+            if (!this.isEditor(elements[i])) {
+                var editor = util.createUnitEditor(elements[i]);
+                util.editors[idx] = editor;
+            }
+            if (callback && typeof callback === "function")
+                callback(editor);
         }
         clearLocalStorage(w, location.origin);
     };
@@ -319,76 +358,76 @@
             //create editor and push
             var viewer = toastui.Editor.factory(cloneOptions);
             util.viewers[idx] = viewer;
-            
+
             //create copy link in anchor
-	        viewer.anchors = [];
-	        var anchors = viewer.preview.el.querySelectorAll(".header-anchor");
-	        for(var k=0; k < anchors.length; k++){
-	            anchors[k].setAttribute("id", "header-anchor-"+k);
-	            anchors[k].dataset.depth = anchors[k].tagName.substr(1, 1);
-	            anchors[k].appendChild(util.createCopyElement());
-	            viewer.anchors.push(anchors[k]);
-	        }
-            
-	      //callback after viewer create
-            if(callback && typeof callback === "function")
-            	callback(viewer);
+            viewer.anchors = [];
+            var anchors = viewer.preview.el.querySelectorAll(".header-anchor");
+            for (var k = 0; k < anchors.length; k++) {
+                anchors[k].setAttribute("id", "header-anchor-" + k);
+                anchors[k].dataset.depth = anchors[k].tagName.substr(1, 1);
+                anchors[k].appendChild(util.createCopyElement());
+                viewer.anchors.push(anchors[k]);
+            }
+
+            //callback after viewer create
+            if (callback && typeof callback === "function")
+                callback(viewer);
         }
-        
+
     };
-    
-    util.createModeChanger = function(selector, callback){
-    	 var elements = document.querySelectorAll(selector);
-         if (!elements.length) return;
-         
-         for(var i=0; i < elements.length; i++){
-        	 var button = elements[i];
-        	 button.addEventListener("click", function(e){
-        		 e.preventDefault();
-        		 util.changeEditorMode();
-        	 });
-         }
+
+    util.createModeChanger = function (selector, callback) {
+        var elements = document.querySelectorAll(selector);
+        if (!elements.length) return;
+
+        for (var i = 0; i < elements.length; i++) {
+            var button = elements[i];
+            button.addEventListener("click", function (e) {
+                e.preventDefault();
+                util.changeEditorMode();
+            });
+        }
     };
-    
-    util.changeEditorMode = function(){
-        if(!util.editors.length) return;
-        
-        for(var i=0; i < util.editors.length; i++){
+
+    util.changeEditorMode = function () {
+        if (!util.editors.length) return;
+
+        for (var i = 0; i < util.editors.length; i++) {
             var currentMode = util.editors[i].getCurrentPreviewStyle();
             var style = currentMode === 'tab' ? 'vertical' : 'tab';
             util.editors[i].changePreviewStyle(style);
         }
     };
-    
-    util.createCopyElement = function(){
+
+    util.createCopyElement = function () {
         var small = document.createElement("small");
         small.classList.add("anchor-copy-element");
-        
+
         var link = document.createElement("a");
         link.classList.add("anchor-copy-url");
         link.setAttribute("href", "#");
         link.setAttribute("title", "주소 복사");
         link.textContent = "★";
         link.addEventListener("click", util.copyToClipboard);
-        
+
         small.appendChild(link);
         return small;
     };
 
     //clipboard 복사
-    util.copyToClipboard = function(e){
-    	e.preventDefault();
-    	
+    util.copyToClipboard = function (e) {
+        e.preventDefault();
+
         var el = document.createElement("textarea");
         var id = this.parentElement.parentElement.getAttribute("id");
-        el.value = location.origin + location.pathname +"#" + id;
+        el.value = location.origin + location.pathname + "#" + id;
         document.body.appendChild(el);
         el.select();
         document.execCommand("copy");
         document.body.removeChild(el);
-        
+
         //notification - required notification library
-        if(window.createNotification){
+        if (window.createNotification) {
             window.createNotification({
                 closeOnClick: true,
                 displayCloseButton: false,
@@ -399,10 +438,9 @@
                 title: '복사 완료',
                 message: '주소가 클립보드에 복사되었습니다.'
             });
-        }
-        else{
+        } else {
             window.alert("링크 주소가 클립보드에 복사되었습니다");
         }
     };
-    
+
 })(window);

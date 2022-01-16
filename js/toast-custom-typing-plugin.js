@@ -20,8 +20,8 @@ function typingPlugin(){
             const wrapperId = 'typing-' + Math.random().toString(36).substring(2, 12);
             setTimeout(renderTypingHtml.bind(null, wrapperId, null), 50);
             return [
-                {type:'openTag', tagName:'div', outerNewLine:true, attributes:{id:wrapperId, "data-source-code":encodeURIComponent(node.literal)}},
-                {type:'html', content:"typing"},
+                {type:'openTag', tagName:'div', outerNewLine:true, attributes:{id:wrapperId, "data-source-code":encodeURIComponent(node.literal.trim())}},
+                {type:'html', content:""},
                 {type:'closeTag', tagName:'div', outerNewLine:true},
             ];
         }
@@ -31,7 +31,6 @@ function typingPlugin(){
     
 function renderTypingHtml(wrapperId, sourceCode){
     var el = document.getElementById(wrapperId);
-    console.log(el);
     var app = new Hacademy.TypingPane(el, {
         strict:false,
         progress:true,
@@ -54,8 +53,8 @@ function typingStrictPlugin(){
             const wrapperId = 'typing-strict-' + Math.random().toString(36).substring(2, 12);
             setTimeout(renderTypingStrictHtml.bind(null, wrapperId, null), 50);
             return [
-                {type:'openTag', tagName:'div', outerNewLine:true, attributes:{id:wrapperId, "data-source-code":encodeURIComponent(node.literal)}},
-                {type:'html', content:"typing"},
+                {type:'openTag', tagName:'div', outerNewLine:true, attributes:{id:wrapperId, "data-source-code":encodeURIComponent(node.literal.trim())}},
+                {type:'html', content:""},
                 {type:'closeTag', tagName:'div', outerNewLine:true},
             ];
         }
