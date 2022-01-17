@@ -19,8 +19,8 @@ function typingPlugin(){
         typing(node){
             const wrapperId = 'typing-' + Math.random().toString(36).substring(2, 12);
             
-            
-            if(node.literal.trim()){
+            const content = node.literal.trim();
+            if(content && content != '$'){
                 setTimeout(renderTypingHtml.bind(null, wrapperId, null), 50);
             }
 
@@ -56,8 +56,8 @@ function typingStrictPlugin(){
     const toHTMLRenderers = {
         typingStrict(node){
             const wrapperId = 'typing-strict-' + Math.random().toString(36).substring(2, 12);
-
-            if(node.literal.trim()){
+            const content = node.literal.trim();
+            if(content && content != '$'){
                 setTimeout(renderTypingStrictHtml.bind(null, wrapperId, null), 50);
             }
             return [

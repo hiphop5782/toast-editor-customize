@@ -19,16 +19,18 @@ function zipViewerPlugin(){
 	const toHTMLRenderers = { 
         zipviewer(node){
 			let url = node.literal.trim();
-			if(!url.contains("/")){
+			if(!url.indexOf("/") < 0){
 				url = "http://www.sysout.co.kr/home/zipviewer/" + url;
 			}
 
-			const wrapperId = 'zipviewer-' + Math.random().toString(36).substring(2, 12);
-    		setTimeout(renderZipViewer.bind(null, wrapperId, url), 50);
+			if(url && url != '$'){
+				const wrapperId = 'zipviewer-' + Math.random().toString(36).substring(2, 12);
+    			setTimeout(renderZipViewer.bind(null, wrapperId, url), 50);
+			}
 
 			return [
                 {type:'openTag', tagName:'div', outerNewLine:true},
-                {type:'html', content:iframe},
+                {type:'html', content:""},
                 {type:'closeTag', tagName:'div', outerNewLine:true},
             ];
 		}

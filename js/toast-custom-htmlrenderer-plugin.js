@@ -28,7 +28,8 @@ function htmlRendererPlugin(){
             //console.log(wrapperId);
 
             //Hacademy RenderPane 사용(내용이 있을 경우에만)
-            if(node.literal.trim()){
+            const content = node.literal.trim();
+            if(content && content != '$'){
                 setTimeout(()=>{
                     var el = document.getElementById(wrapperId);
                     //console.log(el);
@@ -72,7 +73,8 @@ function htmlRendererSourcePlugin(){
             //console.log(wrapperId);
 
             //Hacademy RenderPane 사용(내용이 있을 경우에만)
-            if(node.literal.trim()){
+            const content = node.literal.trim();
+            if(content && content != '$'){
                 setTimeout(()=>{
                     var el = document.getElementById(wrapperId);
                     console.log(el);
@@ -116,7 +118,8 @@ function htmlRendererSplitPlugin(){
             //console.log(wrapperId);
 
             //Hacademy RenderPane 사용(내용이 있을 경우에만)
-            if(node.literal.trim()){
+            const content = node.literal.trim();
+            if(content && content != '$'){
                 setTimeout(()=>{
                     var el = document.getElementById(wrapperId);
                     console.log(el);
