@@ -25,42 +25,6 @@
         maxHeight: 300
     };
 
-    function latexPlugin() {
-        const toHTMLRenderers = {
-            latex(node) {
-                const generator = new latexjs.HtmlGenerator({
-                    hyphenate: false
-                });
-                const {
-                    body
-                } = latexjs.parse(node.literal, {
-                    generator
-                }).htmlDocument();
-
-                return [{
-                        type: 'openTag',
-                        tagName: 'div',
-                        outerNewLine: true
-                    },
-                    {
-                        type: 'html',
-                        content: body.innerHTML
-                    },
-                    {
-                        type: 'closeTag',
-                        tagName: 'div',
-                        outerNewLine: true
-                    }
-                ];
-            },
-        }
-
-        return {
-            toHTMLRenderers
-        }
-    }
-
-
     const pluginList = [
         [chart, chartOptions] //chart plugin
         , uml //uml plugin
@@ -78,10 +42,10 @@
         ,htmlRendererSplitPlugin//custom html-renderer plugin(split base)
         , typingPlugin //custom typing plugin(non-strict)
         , typingStrictPlugin //custom typing plugin(strict)
-        //,javaSimpleRunner//custom java runner(simple)
-        //,javaMainRunner//custom java runner(main)
-        //,javaSimpleIDE//custom java ide runner(simple)
-        //,javaMainIDE//custom java ide runner(main)
+        ,javaSimpleRunner//custom java runner(simple)
+        ,javaMainRunner//custom java runner(main)
+        ,javaSimpleIDE//custom java ide runner(simple)
+        ,javaMainIDE//custom java ide runner(main)
     ];
 
     const customHTMLRenderer = {
