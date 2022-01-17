@@ -26,7 +26,7 @@ function javaSimpleRunner(){
 //3.x
 function javaSimpleRunner(){
     const toHTMLRenderers = {
-        javaSimple(node){
+        'java-simple'(node){
             const wrapperId = 'java-simple-' + Math.random().toString(36).substring(2, 12);
 
             if(node.literal.trim()){
@@ -68,7 +68,7 @@ function javaSimpleRunner(){
 //3.x
 function javaMainRunner(){
     const toHTMLRenderers = {
-        javaMain(node){
+        'java-main'(node){
             const wrapperId = 'java-main-' + Math.random().toString(36).substring(2, 12);
 
             if(node.literal.trim()){
@@ -111,9 +111,9 @@ function javaSimpleIDE(){
 */
 
 //3.x
-function javaSimpleIDE(){
+function javaSimpleEditor(){
     const toHTMLRenderers = {
-        javaIdeSimple(node){
+        'java-simple-editor'(node){
             const wrapperId = 'java-ide-simple-' + Math.random().toString(36).substring(2, 12);
 
             if(node.literal.trim()){
@@ -156,9 +156,9 @@ function javaSimpleIDE(){
 } */
 
 //3.x
-function javaMainIDE(){
+function javaMainEditor(){
     const toHTMLRenderers = {
-        javaIdeSimple(node){
+        'java-main-editor'(node){
             const wrapperId = 'java-ide-main-' + Math.random().toString(36).substring(2, 12);
 
             if(node.literal.trim()){

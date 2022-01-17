@@ -31,7 +31,7 @@ function htmlRendererPlugin(){
             if(node.literal.trim()){
                 setTimeout(()=>{
                     var el = document.getElementById(wrapperId);
-                    console.log(el);
+                    //console.log(el);
                     var app = new Hacademy.RenderPane(el, {
                         mode:"result"
                     });
@@ -67,7 +67,7 @@ function htmlRendererPlugin(){
 
 function htmlRendererSourcePlugin(){
     const toHTMLRenderers = { 
-        renderSource(node){
+        'render-source'(node){
             const wrapperId = 'render-source-' + Math.random().toString(36).substring(2, 12);
             //console.log(wrapperId);
 
@@ -111,7 +111,7 @@ function htmlRendererSourcePlugin(){
 // 3.x
 function htmlRendererSplitPlugin(){
     const toHTMLRenderers = { 
-        renderSplit(node){
+        'render-split'(node){
             const wrapperId = 'render-split-' + Math.random().toString(36).substring(2, 12);
             //console.log(wrapperId);
 
