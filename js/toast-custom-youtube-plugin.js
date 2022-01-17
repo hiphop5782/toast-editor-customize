@@ -12,12 +12,15 @@ function youtubePlugin(){
     const toHTMLRenderers = { 
         youtube(node){
             let url = node.literal.trim();
-            if(!url) return;
+            //if(!url) return;
             
-            const question = url.lastIndexOf("?");
+            const question = url.indexOf("v=");
             if(question >= 0){
-                url = url.substring(question+1);
-                url = url.substring("v=".length);
+                url = url.substring(question + "v=".length);
+                const amp = url.indexOf("&");
+                if(amp >= 0){
+                    url = url.substring(0, amp);
+                }
             }
             const slash = url.lastIndexOf("/");
             if(slash >= 0){

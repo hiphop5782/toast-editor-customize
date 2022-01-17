@@ -24,8 +24,6 @@
 function htmlRendererPlugin(){
     const toHTMLRenderers = { 
         render(node){
-            if(!node.literal.trim()) return;
-
             const wrapperId = 'render-' + Math.random().toString(36).substring(2, 12);
             console.log(wrapperId);
             // setTimeout(()=>{
