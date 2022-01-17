@@ -18,7 +18,12 @@ function typingPlugin(){
     const toHTMLRenderers = {
         typing(node){
             const wrapperId = 'typing-' + Math.random().toString(36).substring(2, 12);
-            setTimeout(renderTypingHtml.bind(null, wrapperId, null), 50);
+            
+            
+            if(node.literal.trim()){
+                setTimeout(renderTypingHtml.bind(null, wrapperId, null), 50);
+            }
+
             return [
                 {type:'openTag', tagName:'div', outerNewLine:true, attributes:{id:wrapperId, "data-source-code":encodeURIComponent(node.literal.trim())}},
                 {type:'html', content:""},
@@ -51,7 +56,10 @@ function typingStrictPlugin(){
     const toHTMLRenderers = {
         typingStrict(node){
             const wrapperId = 'typing-strict-' + Math.random().toString(36).substring(2, 12);
-            setTimeout(renderTypingStrictHtml.bind(null, wrapperId, null), 50);
+
+            if(node.literal.trim()){
+                setTimeout(renderTypingStrictHtml.bind(null, wrapperId, null), 50);
+            }
             return [
                 {type:'openTag', tagName:'div', outerNewLine:true, attributes:{id:wrapperId, "data-source-code":encodeURIComponent(node.literal.trim())}},
                 {type:'html', content:""},
