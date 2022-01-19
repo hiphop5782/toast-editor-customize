@@ -36,7 +36,7 @@
         , treePathPlugin //custom tree path plugin
         , katexPlugin //custom katex plugin
         , youtubePlugin //custom youtube plugin
-        //,zipViewerPlugin//custom zip-viewer plugin
+        ,zipViewerPlugin//custom zip-viewer plugin
         ,htmlRendererPlugin//custom html-renderer plugin(result base)
         ,htmlRendererSourcePlugin//custom html-renderer plugin(source base)
         ,htmlRendererSplitPlugin//custom html-renderer plugin(split base)
@@ -44,8 +44,8 @@
         , typingStrictPlugin //custom typing plugin(strict)
         ,javaSimpleRunner//custom java runner(simple)
         ,javaMainRunner//custom java runner(main)
-        ,javaSimpleIDE//custom java ide runner(simple)
-        ,javaMainIDE//custom java ide runner(main)
+        ,javaSimpleEditor//custom java ide runner(simple)
+        ,javaMainEditor//custom java ide runner(main)
     ];
 
     const customHTMLRenderer = {

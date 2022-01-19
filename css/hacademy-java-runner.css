@@ -25,9 +25,9 @@
     outline:none;
     border:1px solid gray;
     resize:none;
-    padding:0.5rem;
+    padding:0.5em;
     margin:0;
-    min-height: 5rem;
+    min-height: 5em;
     color: transparent;
     background-color: transparent;
     caret-color: black;
@@ -35,15 +35,15 @@
     letter-spacing: 0.3px;
 }
 .hacademy-runner-pane >  .content-panel > .editor-panel > textarea::selection{
-    color: transparent;
-    background-color:#DDDDDD;
+    color: white;
+    background-color:black;
 }
 .hacademy-runner-pane >  .content-panel > .editor-panel > pre {
     margin: 0;
     position:absolute;
     top:0;
     left:0;
-    padding:0.5rem;
+    padding:0.5em;
     white-space: pre-wrap;  
     white-space: -moz-pre-wrap;
     white-space: -pre-wrap;  
@@ -62,7 +62,7 @@
 .hacademy-runner-pane >  .content-panel > .editor-panel > pre,
 .hacademy-runner-pane >  .content-panel > .editor-panel > pre > code {
     font-family: Noto Sans !important;
-    font-size: 1rem !important;
+    font-size: 1em !important;
     letter-spacing: 0.3px;
     word-spacing: 0.5px;
 }
@@ -70,7 +70,7 @@
     text-align:right;
 }
 .hacademy-runner-pane > .content-panel > .button-panel > button{
-    padding:0.25rem;
+    padding:0.25em;
     cursor: pointer;
     min-width: 100px;
     margin-left: 10px;
@@ -98,6 +98,6 @@
     overflow: auto;
 }
 .hacademy-runner-pane > .content-panel > .result-panel > pre {
-    padding:0.5rem;
+    padding:0.5em;
     box-shadow: none;
 }

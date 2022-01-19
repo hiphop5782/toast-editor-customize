@@ -28,10 +28,11 @@ function htmlRendererPlugin(){
             //console.log(wrapperId);
 
             //Hacademy RenderPane 사용(내용이 있을 경우에만)
-            if(node.literal.trim()){
+            const content = node.literal.trim();
+            if(content && content != '$'){
                 setTimeout(()=>{
                     var el = document.getElementById(wrapperId);
-                    console.log(el);
+                    //console.log(el);
                     var app = new Hacademy.RenderPane(el, {
                         mode:"result"
                     });
@@ -67,12 +68,13 @@ function htmlRendererPlugin(){
 
 function htmlRendererSourcePlugin(){
     const toHTMLRenderers = { 
-        renderSource(node){
+        'render-source'(node){
             const wrapperId = 'render-source-' + Math.random().toString(36).substring(2, 12);
             //console.log(wrapperId);
 
             //Hacademy RenderPane 사용(내용이 있을 경우에만)
-            if(node.literal.trim()){
+            const content = node.literal.trim();
+            if(content && content != '$'){
                 setTimeout(()=>{
                     var el = document.getElementById(wrapperId);
                     console.log(el);
@@ -111,12 +113,13 @@ function htmlRendererSourcePlugin(){
 // 3.x
 function htmlRendererSplitPlugin(){
     const toHTMLRenderers = { 
-        renderSplit(node){
+        'render-split'(node){
             const wrapperId = 'render-split-' + Math.random().toString(36).substring(2, 12);
             //console.log(wrapperId);
 
             //Hacademy RenderPane 사용(내용이 있을 경우에만)
-            if(node.literal.trim()){
+            const content = node.literal.trim();
+            if(content && content != '$'){
                 setTimeout(()=>{
                     var el = document.getElementById(wrapperId);
                     console.log(el);
