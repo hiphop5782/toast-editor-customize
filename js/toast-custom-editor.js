@@ -213,6 +213,9 @@
         input.setAttribute("type", "hidden");
         var name = element.dataset.name || 'content';
         input.setAttribute("name", name);
+        if(content){
+            input.value = content;
+        }
         element.appendChild(input);
 
         editor.on("change", e => {
